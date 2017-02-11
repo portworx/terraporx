@@ -1,6 +1,6 @@
 variable "stack_name" {
    description = "PX Stack Name"
-   default = "px-stack-jss"
+   default = "px-tf-stack"
 }
 
 variable "etcd_discovery_url" {
@@ -9,7 +9,6 @@ variable "etcd_discovery_url" {
 
 variable "region" {
    description = "AWS Region"
-   default = "us-east-1"
 }
 
 variable "instance_type" {
@@ -19,7 +18,6 @@ variable "instance_type" {
 
 variable "keypair" {
    description = "KeyPair to connect"
-   default = "px_dev_east"
 }
 
 variable "volsize" {
