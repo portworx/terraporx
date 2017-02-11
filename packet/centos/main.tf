@@ -56,7 +56,7 @@ resource "packet_device" "centos7-1" {
 # 
 # Call the Packet API to attach the block device to the server
 #
-# NB: Before calling "destroy", you *must* ssh to the server and do "sh packet-block-storage/packet-block-storage-detach".
+# NB: Before calling "destroy", you *must* ssh to the server and do "bash packet-block-storage/packet-block-storage-detach".
 # Otherwise, the server/volume deletion *will* fail
 #
   provisioner "local-exec" {
@@ -68,7 +68,7 @@ resource "packet_device" "centos7-1" {
        inline = [
          "yum -y install git",
          "git clone https://github.com/packethost/packet-block-storage.git",
-         "sh packet-block-storage/packet-block-storage-attach",
+         "bash packet-block-storage/packet-block-storage-attach",
          "yum install -y yum-utils",
          "yum-config-manager --add-repo https://docs.docker.com/engine/installation/linux/repo_files/centos/docker.repo",
          "yum makecache fast",
@@ -98,7 +98,7 @@ resource "packet_device" "centos7-2" {
 # 
 # Call the Packet API to attach the block device to the server
 #
-# NB: Before calling "destroy", you *must* ssh to the server and do "sh packet-block-storage/packet-block-storage-detach".
+# NB: Before calling "destroy", you *must* ssh to the server and do "bash packet-block-storage/packet-block-storage-detach".
 # Otherwise, the server/volume deletion *will* fail
 #
   provisioner "local-exec" {
@@ -110,7 +110,7 @@ resource "packet_device" "centos7-2" {
        inline = [
          "yum -y install git",
          "git clone https://github.com/packethost/packet-block-storage.git",
-         "sh packet-block-storage/packet-block-storage-attach",
+         "bash packet-block-storage/packet-block-storage-attach",
          "yum install -y yum-utils",
          "yum-config-manager --add-repo https://docs.docker.com/engine/installation/linux/repo_files/centos/docker.repo",
          "yum makecache fast",
@@ -138,7 +138,7 @@ resource "packet_device" "centos7-3" {
 # 
 # Call the Packet API to attach the block device to the server
 #
-# NB: Before calling "destroy", you *must* ssh to the server and do "sh packet-block-storage/packet-block-storage-detach".
+# NB: Before calling "destroy", you *must* ssh to the server and do "bash packet-block-storage/packet-block-storage-detach".
 # Otherwise, the server/volume deletion *will* fail
 #
   provisioner "local-exec" {
@@ -150,7 +150,7 @@ resource "packet_device" "centos7-3" {
        inline = [
          "yum -y install git",
          "git clone https://github.com/packethost/packet-block-storage.git",
-         "sh packet-block-storage/packet-block-storage-attach",
+         "bash packet-block-storage/packet-block-storage-attach",
          "yum install -y yum-utils",
          "yum-config-manager --add-repo https://docs.docker.com/engine/installation/linux/repo_files/centos/docker.repo",
          "yum makecache fast",
