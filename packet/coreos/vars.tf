@@ -1,0 +1,44 @@
+
+variable "packet_api_key" {
+  description = "Your packet API key"
+  default = "pHMzxjhGexLfzFzEwCPVKS1ttCKpgb1r"
+}
+
+variable "packet_project_id" {
+  description = "Packet Project ID"
+  default = "13d62654-b7fc-41c2-a149-2401899cadb0"
+}
+
+variable "packet_facility" {
+  description = "Packet facility: US East(ewr1), US West(sjc1), or EU(ams1). Default: sjc1"
+  default = "ewr1"
+}
+
+variable "packet_server_hostname" {
+  description = "Server Hostname"
+  default = "px-coreos"
+}
+
+variable "packet_storage_plan" {
+  description = "Storage Plan"
+  default = "storage_1"
+}
+
+variable "packet_volume_size" {
+  description = "Volume Size"
+  default = 100
+}
+
+variable "packet_server_type" {
+  description = "Instance type of Server"
+  default = "baremetal_0"
+}
+
+variable "ssh_key_path" {
+  description = "Path to your private SSH key for the project"
+  default = "./jeff.key"
+}
+
+variable "etcd_discovery_url" {
+  description = "Output from 'http://discovery.etcd.io/new?size=3'"
+}
