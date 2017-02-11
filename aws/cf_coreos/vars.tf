@@ -9,7 +9,6 @@ variable "etcd_discovery_url" {
 
 variable "region" {
    description = "AWS Region"
-   default = "us-east-1"
 }
 
 variable "instance_type" {
