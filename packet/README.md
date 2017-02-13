@@ -16,3 +16,7 @@ For each Server:
 * Run "bash packet-block-storage/packet-block-attach"
 
 Afterwards, "terraform destroy" can be successfully run.
+
+## Notes
+The "coreos" stack is a work in progress and does not work completely as expected.
+This seems to be due to Packet not exposing distinct network interfaces for the CoreOS stack.
