@@ -9,7 +9,11 @@ variable "packet_project_id" {
 
 variable "packet_facility" {
   description = "Packet facility: US East(ewr1), US West(sjc1), or EU(ams1). Default: sjc1"
-  default = "ewr1"
+}
+
+variable "packet_count" {
+  description = "Number of servers (and volumes) to create"
+  default = 3
 }
 
 variable "packet_server_hostname" {

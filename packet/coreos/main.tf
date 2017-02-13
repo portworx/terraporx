@@ -3,8 +3,9 @@ provider "packet" {
 }
 
 # Additional non-root volume needed for Portworx
-resource "packet_volume" "px-tf-core1-volume1" {
-    description = "px-tf-core1-volume1"
+resource "packet_volume" "px-tf-core-volume" {
+    count = "${var.packet_count}"
+    description = "px-tf-core-volume-${count.index}"
     facility = "${var.packet_facility}"
     project_id = "${var.packet_project_id}"
     plan = "${var.packet_storage_plan}"
@@ -15,9 +16,10 @@ resource "packet_volume" "px-tf-core1-volume1" {
 }
 
 #
-resource "packet_device" "coreos-1" {
-  hostname = "${var.packet_server_hostname}-1"
-  operating_system = "coreos_alpha"
+resource "packet_device" "coreos" {
+  count = "${var.packet_count}"
+  hostname = "${var.packet_server_hostname}-${count.index}"
+  operating_system = "coreos_beta"
   plan          = "${var.packet_server_type}"
   facility      = "${var.packet_facility}"
   project_id    = "${var.packet_project_id}"
@@ -36,9 +38,7 @@ coreos:
    units:
        - name: etcd2.service
          command: start
-       - name: fleet.service
-         command: start
-       - name: portworx.service
+- name: portworx.service
          command: start
          content: |
             [Unit]
@@ -50,6 +50,7 @@ coreos:
             TimeoutSec=0
             ExecStartPre=-/usr/bin/docker stop %n
             ExecStartPre=-/usr/bin/docker rm -f %n
+            ExecStartPre=/usr/bin/bash -c "/usr/bin/systemctl set-environment DMPATH=`multipath -ll|grep dm-| awk '{print $2}'`"
             ExecStart=/usr/bin/docker run --net=host --privileged=true \
                    --cgroup-parent=/system.slice/portworx.service      \
                    -v /run/docker/plugins:/run/docker/plugins          \
@@ -62,11 +63,12 @@ coreos:
                    -v /lib/modules:/lib/modules                        \
                    --ipc=host                                          \
                    --name=%n                                           \
-                   portworx/px-dev -s /dev/dm-0 -d bond0 -m bond0 -k etcd://127.0.0.1:2379 -c px-cluster-coreos
+                   portworx/px-dev -s /dev/$${DMPATH} -d bond0 -m bond0 -k etcd://127.0.0.1:2379 -c px-cluster-coreos
             KillMode=control-group
             ExecStop=/usr/bin/docker stop -t 10 %n
             [Install]
             WantedBy=multi-user.target
+k
 EOF
   connection {
     user = "core"
@@ -87,7 +89,7 @@ EOF
 # Otherwise, the server/volume deletion *will* fail
 #
   provisioner "local-exec" {
-    command = "curl -X POST -H \"Content-Type: application/json\" -H \"X-Auth-Token: ${var.packet_api_key}\" -d '{\"device_id\": \"${packet_device.coreos-1.id}\"}' https://api.packet.net/storage/${packet_volume.px-tf-core1-volume1.id}/attachments"
+    command = "curl -X POST -H \"Content-Type: application/json\" -H \"X-Auth-Token: ${var.packet_api_key}\" -d '{\"device_id\": \"${self.id}\"}' https://api.packet.net/storage/${element(packet_volume.px-tf-core-volume.*.id,count.index)}/attachments"
   }
   provisioner "remote-exec" {
      inline = [

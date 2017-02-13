@@ -9,6 +9,11 @@ variable "packet_project_id" {
   default = "13d62654-b7fc-41c2-a149-2401899cadb0"
 }
 
+variable "packet_count" {
+  description = "Number of servers (and volumes) to create"
+  default = 3
+}
+
 variable "packet_facility" {
   description = "Packet facility: US East(ewr1), US West(sjc1), or EU(ams1). Default: sjc1"
   default = "ewr1"
