@@ -38,7 +38,7 @@ coreos:
    units:
        - name: etcd2.service
          command: start
-- name: portworx.service
+       - name: portworx.service
          command: start
          content: |
             [Unit]
@@ -68,7 +68,6 @@ coreos:
             ExecStop=/usr/bin/docker stop -t 10 %n
             [Install]
             WantedBy=multi-user.target
-k
 EOF
   connection {
     user = "core"
