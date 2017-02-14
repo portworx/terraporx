@@ -19,21 +19,6 @@ variable "packet_server_hostname" {
   default = "px-centos-7"
 }
 
-variable "packet_storage_plan" {
-  description = "Storage Plan"
-  default = "storage_1"
-}
-
-variable "packet_volume_size" {
-  description = "Volume Size"
-  default = 100
-}
-
-variable "packet_server_type" {
-  description = "Instance type of Server"
-  default = "baremetal_0"
-}
-
 variable "ssh_key_path" {
   description = "Path to your private SSH key for the project"
   default = "./your.key"

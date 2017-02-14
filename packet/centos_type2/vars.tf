@@ -12,28 +12,12 @@ variable "packet_facility" {
 }
 
 variable "packet_count" {
-  description = "Number of servers (and volumes) to create"
-  default = 3
+    description = "Number of servers/volumes"
 }
 
 variable "packet_server_hostname" {
   description = "Server Hostname"
-  default = "px-centos-7"
-}
-
-variable "packet_storage_plan" {
-  description = "Storage Plan"
-  default = "storage_1"
-}
-
-variable "packet_volume_size" {
-  description = "Volume Size"
-  default = 100
-}
-
-variable "packet_server_type" {
-  description = "Instance type of Server"
-  default = "baremetal_0"
+  default = "px-jss-centos-7"
 }
 
 variable "ssh_key_path" {

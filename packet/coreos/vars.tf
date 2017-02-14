@@ -1,20 +1,26 @@
 
 variable "packet_api_key" {
   description = "Your packet API key"
+  default = "pHMzxjhGexLfzFzEwCPVKS1ttCKpgb1r"
 }
 
 variable "packet_project_id" {
   description = "Packet Project ID"
+  default = "13d62654-b7fc-41c2-a149-2401899cadb0"
 }
 
-variable "packet_count" {
-  description = "Number of servers (and volumes) to create"
-  default = 3
+variable "etcd_discovery_url" {
+  description = "etcd seed url: http://discovery.etcd.io/new?size=3"
 }
 
 variable "packet_facility" {
   description = "Packet facility: US East(ewr1), US West(sjc1), or EU(ams1). Default: sjc1"
   default = "ewr1"
+}
+
+variable "packet_count" {
+   description = "Number of servers/volumes"
+   default = 3
 }
 
 variable "packet_server_hostname" {
@@ -39,8 +45,5 @@ variable "packet_server_type" {
 
 variable "ssh_key_path" {
   description = "Path to your private SSH key for the project"
-}
-
-variable "etcd_discovery_url" {
-  description = "Output from 'http://discovery.etcd.io/new?size=3'"
+  default = "./jeff.key"
 }
