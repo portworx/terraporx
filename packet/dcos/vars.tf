@@ -1,12 +1,10 @@
 
 variable "packet_api_key" {
   description = "Your packet API key"
-  default = "pHMzxjhGexLfzFzEwCPVKS1ttCKpgb1r"
 }
 
 variable "packet_project_id" {
   description = "Packet Project ID"
-  default = "13d62654-b7fc-41c2-a149-2401899cadb0"
 }
 
 variable "packet_facility" {
@@ -16,7 +14,7 @@ variable "packet_facility" {
 
 variable "packet_agent_type" {
   description = "Instance type of Agent"
-  default = "baremetal_0"
+  default = "baremetal_2"
 }
 
 variable "packet_master_type" {
@@ -31,7 +29,7 @@ variable "packet_boot_type" {
 
 variable "dcos_cluster_name" {
   description = "Name of your cluster. Alpha-numeric and hyphens only, please."
-  default = "packet-jeff-dcos"
+  default = "packet-dcos"
 } 
 
 variable "dcos_master_count" {
@@ -49,17 +47,20 @@ variable "dcos_public_agent_count" {
   default = "1"
 }
 
+variable "etcd_discovery_url" {
+  description = "etcd seed url: http://discovery.etcd.io/new?size=4"
+}
+
 variable "dcos_ssh_public_key_path" {
   description = "Path to your public SSH key path"
-  default = "./jeff.pub"
 }
 
 variable "dcos_installer_url" {
   description = "Path to get DCOS"
-  default = "https://downloads.dcos.io/dcos/EarlyAccess/dcos_generate_config.sh"
+# default = "https://downloads.dcos.io/dcos/EarlyAccess/dcos_generate_config.sh"
+  default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 } 
 
 variable "dcos_ssh_key_path" {
   description = "Path to your private SSH key for the project"
-  default = "./jeff.key"
 }

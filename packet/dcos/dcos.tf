@@ -5,13 +5,23 @@ provider "packet" {
 resource "packet_device" "dcos_bootstrap" {
   hostname = "${format("${var.dcos_cluster_name}-bootstrap-%02d", count.index)}"
 
-  operating_system = "coreos_stable"
+  operating_system = "coreos_beta"
   plan             = "${var.packet_boot_type}"
   connection {
     user = "core"
     private_key = "${file("${var.dcos_ssh_key_path}")}"
+    agent = false
   }
-  user_data     = "#cloud-config\n\nmanage_etc_hosts: \"localhost\"\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
+  user_data     = <<EOF
+#cloud-config
+  coreos:
+    update:
+       reboot-strategy: off
+  manage_etc_hosts: localhost
+  ssh_authorized_keys:
+     - "${file("${var.dcos_ssh_public_key_path}")}"
+EOF
+
   facility      = "${var.packet_facility}"
   project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
@@ -54,17 +64,26 @@ resource "packet_device" "dcos_bootstrap" {
 
 resource "packet_device" "dcos_master" {
   hostname = "${format("${var.dcos_cluster_name}-master-%02d", count.index)}"
-  operating_system = "coreos_stable"
+  operating_system = "coreos_beta"
   plan             = "${var.packet_master_type}"
 
   count         = "${var.dcos_master_count}"
-  user_data     = "#cloud-config\n\nmanage_etc_hosts: \"localhost\"\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
+  user_data     = <<EOF
+#cloud-config
+  coreos:
+    update:
+       reboot-strategy: off
+  manage_etc_hosts: localhost
+  ssh_authorized_keys:
+     - "${file("${var.dcos_ssh_public_key_path}")}"
+EOF
   facility      = "${var.packet_facility}"
   project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
   connection {
     user = "core"
     private_key = "${file("${var.dcos_ssh_key_path}")}"
+    agent = false
   }
   provisioner "local-exec" {
     command = "rm -rf ./do-install.sh"
@@ -87,17 +106,35 @@ resource "packet_device" "dcos_master" {
 resource "packet_device" "dcos_agent" {
   hostname = "${format("${var.dcos_cluster_name}-agent-%02d", count.index)}"
   depends_on = ["packet_device.dcos_bootstrap"]
-  operating_system = "coreos_stable"
+  operating_system = "coreos_beta"
   plan             = "${var.packet_agent_type}"
 
   count         = "${var.dcos_agent_count}"
-  user_data     = "#cloud-config\n\nmanage_etc_hosts: \"localhost\"\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
+  user_data     = <<EOF
+#cloud-config
+  coreos:
+    update:
+       reboot-strategy: off
+    etcd2:
+       discovery: "${var.etcd_discovery_url}"
+       advertise-client-urls: http://$private_ipv4:2379
+       initial-advertise-peer-urls: http://$private_ipv4:2380
+       listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+       listen-peer-urls: http://$private_ipv4:2380
+    units:
+    - name: etcd2.service
+      command: start
+  manage_etc_hosts: localhost
+  ssh_authorized_keys:
+     - "${file("${var.dcos_ssh_public_key_path}")}"
+EOF
   facility      = "${var.packet_facility}"
   project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
   connection {
     user = "core"
     private_key = "${file("${var.dcos_ssh_key_path}")}"
+    agent = false
   }
   provisioner "local-exec" {
     command = "while [ ! -f ./do-install.sh ]; do sleep 1; done"
@@ -115,17 +152,35 @@ resource "packet_device" "dcos_agent" {
 resource "packet_device" "dcos_public_agent" {
   hostname = "${format("${var.dcos_cluster_name}-public-agent-%02d", count.index)}"
   depends_on = ["packet_device.dcos_bootstrap"]
-  operating_system = "coreos_stable"
+  operating_system = "coreos_beta"
   plan             = "${var.packet_agent_type}"
 
   count         = "${var.dcos_public_agent_count}"
-  user_data     = "#cloud-config\n\nmanage_etc_hosts: \"localhost\"\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
+  user_data     = <<EOF
+#cloud-config
+  coreos:
+    update:
+       reboot-strategy: off
+    etcd2:
+       discovery: "${var.etcd_discovery_url}"
+       advertise-client-urls: http://$private_ipv4:2379
+       initial-advertise-peer-urls: http://$private_ipv4:2380
+       listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+       listen-peer-urls: http://$private_ipv4:2380
+    units:
+    - name: etcd2.service
+      command: start
+  manage_etc_hosts: localhost
+  ssh_authorized_keys:
+     - "${file("${var.dcos_ssh_public_key_path}")}"
+EOF
   facility      = "${var.packet_facility}"
   project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
   connection {
     user = "core"
     private_key = "${file("${var.dcos_ssh_key_path}")}"
+    agent = false
   }
   provisioner "local-exec" {
     command = "while [ ! -f ./do-install.sh ]; do sleep 1; done"
