@@ -1,12 +1,20 @@
 # packet-terraform
 Terraform scripts for packet.net
 
-### This repo holds [Terraform](https://www.terraform.io/) scripts to create a
+#### This repo holds [Terraform](https://www.terraform.io/) scripts to create a
 1, 3, or 5 master DCOS cluster on the [packet.net](https://www.packet.net/)
 provider.
 
-#### With this method, the network is open by default. Because of this, network
-security is a concern and should be addressed as soon as possible by the administrator.
+#### Defaut Versions
+- CoreOS alpha
+- DCOS 1.8
+
+With CoreOS, the implicit `etcd` service is used by `px-dev`
+
+Portworx `px-dev` can be installed through the DC/OS Universe
+
+#### With this method, the network is open by default. 
+Because of this, network security is a concern and should be addressed as soon as possible by the administrator.
 
 ##### To use:
 
