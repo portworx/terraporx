@@ -16,6 +16,11 @@ Copy `sample.terraform.tfvars` to `terraform.tfvars` and insert your variables.
 
 Run `terraform apply`
 
+##### Portworx specifics
+
+To simplify, we use of "baremetal_2" instances for the agent nodes, 
+so that deployment can be done without the external volume dependency.
+
 ##### Theory of Operation:
 
 This script will start the infrastructure machines (bootstrap and masters),
