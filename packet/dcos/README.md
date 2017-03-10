@@ -29,6 +29,13 @@ Run `terraform apply`
 To simplify, we use of "baremetal_2" instances for the agent nodes, 
 so that deployment can be done without the external volume dependency.
 
+To deploy Portworx:
+
+* Download the DC/OS CLI
+* Install 'etcd' : dcos package install --yes etcd
+* Query the 'etcd' URL : dcos task | grep etcd-server | tail -n 1 | awk '{printf "etcd://%s:%s\n", $6, $8}'
+* Launch Portwork through Universe.   For `cmdargs`, use `-a -k etcd://<IP>:<PORT> -c mypx1`, where `-a` uses all available disks, and `-k` refers to the 'etcd' URL
+
 ##### Theory of Operation:
 
 This script will start the infrastructure machines (bootstrap and masters),
