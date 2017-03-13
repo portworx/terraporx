@@ -1,6 +1,22 @@
 # packet-terraform
 Terraform scripts for packet.net
 
+## Lookout!  
+Please follow the steps here to avoid problems with dcos-adminrouter
+https://jira.mesosphere.com/browse/DCOS_OSS-683
+Specifically, on the Master, Change:
+```
+ExecStartPre = /usr/bin/curl --fail -sS -o /dev/null 127.0.0.1:8101/acs/api/v1/groups
+to
+ExecStartPre = /opt/mesosphere/bin/curl --fail -sS -o /dev/null 127.0.0.1:8101/acs/api/v1/groups
+Then restart the service:
+systemctl daemon-reload
+systemctl restart dcos-adminrouter
+```
+
+
+
+
 #### This repo holds [Terraform](https://www.terraform.io/) scripts to create a
 1, 3, or 5 master DCOS cluster on the [packet.net](https://www.packet.net/)
 provider.
