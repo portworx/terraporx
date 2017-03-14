@@ -13,7 +13,7 @@ Then restart the service:
 systemctl daemon-reload
 systemctl restart dcos-adminrouter
 ```
-
+** Update ** : dcos.tf has been updated for the 'dcos-master' to automate this.
 
 
 
@@ -38,7 +38,7 @@ Clone or download repo.
 
 Copy `sample.terraform.tfvars` to `terraform.tfvars` and insert your variables.
 
-Run `terraform apply`
+Run : terraform apply --var etcd_discovery_url=\`curl -XGET http://discovery.etcd.io/new?size=3`
 
 ##### Portworx specifics
 
@@ -48,9 +48,10 @@ so that deployment can be done without the external volume dependency.
 To deploy Portworx:
 
 * Download the DC/OS CLI
-* Install 'etcd' : dcos package install --yes etcd
-* Query the 'etcd' URL : dcos task | grep etcd-server | tail -n 1 | awk '{printf "etcd://%s:%s\n", $6, $8}'
-* Launch Portwork through Universe.   For `cmdargs`, use `-a -k etcd://<IP>:<PORT> -c mypx1`, where `-a` uses all available disks, and `-k` refers to the 'etcd' URL
+* Use the implicit CoreOS 'etcd'  ---- OR
+** Install 'etcd' : dcos package install --yes etcd
+** Query the 'etcd' URL : dcos task | grep etcd-server | tail -n 1 | awk '{printf "etcd://%s:%s\n", $6, $8}'
+** Launch Portwork through Universe.   For `cmdargs`, use `-a -k etcd://<IP>:<PORT> -c mypx1`, where `-a` uses all available disks, and `-k` refers to the 'etcd' URL
 
 ##### Theory of Operation:
 
