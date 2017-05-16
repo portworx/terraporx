@@ -45,7 +45,7 @@ resource "packet_device" "centos7" {
          "git clone https://github.com/packethost/packet-block-storage.git",
          "bash packet-block-storage/packet-block-storage-attach",
          "yum install -y yum-utils",
-         "yum-config-manager --add-repo https://docs.docker.com/engine/installation/linux/repo_files/centos/docker.repo",
+         "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
          "yum makecache fast",
          "yum -y install docker-engine",
          "systemctl enable docker",
