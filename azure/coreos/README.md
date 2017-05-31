@@ -14,9 +14,6 @@ https://michaelheap.com/using-azure-resource-manager-with-terraform/
 Portworx does not start automatically.   After enabling and starting etcd2 as above, run the following command:
 
 ```
-if `uname -r | grep -i coreos > /dev/null`; \
-then HDRS="/lib/modules"; \
-else HDRS="/usr/src"; fi
 sudo docker run --restart=always --name px -d --net=host       \
                  --privileged=true                             \
                  -v /run/docker/plugins:/run/docker/plugins    \
@@ -26,6 +23,6 @@ sudo docker run --restart=always --name px -d --net=host       \
                  -v /opt/pwx/bin:/export_bin                   \
                  -v /var/run/docker.sock:/var/run/docker.sock  \
                  -v /var/cores:/var/cores                      \
-                 -v ${HDRS}:${HDRS}                            \
+                 -v /lib/modules:/lib/modules                  \
                 portworx/px-dev -k etcd://localhost:2379 -c MY_CLUSTER_ID -s /dev/sdc             
 ```                
