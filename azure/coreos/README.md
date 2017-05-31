@@ -7,11 +7,10 @@ The default OS is CoreOS:Stable:1235.9.0
 The Provider.tf file contains the secrets/credentials that can be obtained via
 https://michaelheap.com/using-azure-resource-manager-with-terraform/
 
-'etcd' does not start as intended. Therefore, run the following on all nodes as part of startup:
-* 'systemctl enable etcd2'
-* 'systemctl start etcd2'
+Follow these instructions to bring up 'etcd' and 'px-dev':
+https://docs.portworx.com/scheduler/docker/install.html
 
-Portworx does not start automatically.   After enabling and starting etcd2 as above, run the following command:
+After starting etcd2 as above, run the following command:
 
 ```
 sudo docker run --restart=always --name px -d --net=host       \
@@ -24,5 +23,6 @@ sudo docker run --restart=always --name px -d --net=host       \
                  -v /var/run/docker.sock:/var/run/docker.sock  \
                  -v /var/cores:/var/cores                      \
                  -v /lib/modules:/lib/modules                  \
-                portworx/px-dev -k etcd://localhost:2379 -c MY_CLUSTER_ID -s /dev/sdc             
+                portworx/px-dev -k etcd://$HostIP:2379 -c MY_CLUSTER_ID -s /dev/sdc             
 ```                
+where `HostIP` corresponds to where the 'etcd' container was launched.
