@@ -8,7 +8,7 @@ variable "ssh_key_fingerprint" {
 }
 
 variable "region" {
-  description = "DigitalOcean Region"
+  description = "DigitalOcean Block storage only available in : fra1, nyc1, sfo2 and sgp1"
   default = "sfo2"
 }
 
