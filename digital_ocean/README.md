@@ -1,15 +1,15 @@
 # Terraporx for Digital Ocean
 
-Scripts in this directory are targeted for the Digital Ocean Cloud Provider
+Scripts in this directory support the Digital Ocean Cloud Provider
 
 Instances will be created along with a corresponding non-root block volume,
 to be used for the Portworx storage pool.
 
 These scripts will bring up a 3-node px-dev cluster in under 5 minutes.
 
-For Ubuntu, 'etcd' will be started on one node, and 'px-dev' on all 3.
+For CentOS and Ubuntu, docker will be installed, 'etcd' will be started as a container on one node, and 'px-dev' will be started on all 3.
 
-For CoreOS, the implicit 'etcd2' service will be used on all 3 nodes (see "user_data").
+For CoreOS, the implicit 'etcd2' service will be used on all 3 nodes (see "user_data") to support px-dev running as a systemd service.
 
 ## Destroy/Teardown
 
