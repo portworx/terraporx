@@ -1,15 +1,17 @@
 
 variable "packet_api_key" {
   description = "Your packet API key"
+  default = "pHMzxjhGexLfzFzEwCPVKS1ttCKpgb1r"
 }
 
 variable "packet_project_id" {
   description = "Packet Project ID"
+  default = "13d62654-b7fc-41c2-a149-2401899cadb0"
 }
 
 variable "packet_facility" {
   description = "Packet facility: US East(ewr1), US West(sjc1), or EU(ams1). Default: sjc1"
-  default = "ewr1"
+  default = "sjc1"
 }
 
 variable "packet_agent_type" {
@@ -49,10 +51,7 @@ variable "dcos_public_agent_count" {
 
 variable "etcd_discovery_url" {
   description = "etcd seed url: http://discovery.etcd.io/new?size=4"
-}
-
-variable "dcos_ssh_public_key_path" {
-  description = "Path to your public SSH key path"
+  default = "https://discovery.etcd.io/b2b69000fbf032d3be07cdcf7f8840d7"
 }
 
 variable "dcos_installer_url" {
@@ -61,6 +60,11 @@ variable "dcos_installer_url" {
   default = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 } 
 
+variable "dcos_ssh_public_key_path" {
+   default = "~/.ssh/id_rsa.pub"
+   description = "public key"
+}
 variable "dcos_ssh_key_path" {
   description = "Path to your private SSH key for the project"
+  default = "~/jeff.key"
 }

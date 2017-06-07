@@ -115,15 +115,6 @@ resource "packet_device" "dcos_agent" {
   coreos:
     update:
        reboot-strategy: off
-    etcd2:
-       discovery: "${var.etcd_discovery_url}"
-       advertise-client-urls: http://$private_ipv4:2379
-       initial-advertise-peer-urls: http://$private_ipv4:2380
-       listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-       listen-peer-urls: http://$private_ipv4:2380
-    units:
-    - name: etcd2.service
-      command: start
   manage_etc_hosts: localhost
   ssh_authorized_keys:
      - "${file("${var.dcos_ssh_public_key_path}")}"
@@ -161,15 +152,6 @@ resource "packet_device" "dcos_public_agent" {
   coreos:
     update:
        reboot-strategy: off
-    etcd2:
-       discovery: "${var.etcd_discovery_url}"
-       advertise-client-urls: http://$private_ipv4:2379
-       initial-advertise-peer-urls: http://$private_ipv4:2380
-       listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
-       listen-peer-urls: http://$private_ipv4:2380
-    units:
-    - name: etcd2.service
-      command: start
   manage_etc_hosts: localhost
   ssh_authorized_keys:
      - "${file("${var.dcos_ssh_public_key_path}")}"

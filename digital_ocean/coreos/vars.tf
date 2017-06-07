@@ -8,7 +8,7 @@ variable "do_count" {
 }
 
 variable "region" {
-   description = "Block storage only available in FRA1, NYC1, SFO2 and SGP1"
+   description = "Block storage only available in fra1, nyc1, sfo2 and sgp1"
 }
 
 variable "size" {
