@@ -1,12 +1,10 @@
 
 variable "digitalocean_token" {
   description = "Your DigitalOcean API key"
-  default = "e66158358ca25785555df55d825ed757e34fa504d59509df2455a77280892495"
 }
 
 variable "ssh_key_fingerprint" {
   description = "Your SSH Public Key"
-  default = "e2:79:41:e4:f8:82:27:68:79:3f:b3:5e:af:ae:39:1e"
 }
 
 variable "region" {
@@ -51,7 +49,6 @@ variable "dcos_public_agent_count" {
 
 variable "dcos_ssh_public_key_path" {
   description = "Path to your public SSH key path"
-  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "dcos_installer_url" {
@@ -61,7 +58,6 @@ variable "dcos_installer_url" {
 
 variable "dcos_ssh_key_path" {
   description = "Path to your private SSH key for the project"
-  default = "~/.ssh/id_rsa"
 }
 
 variable "volsize" {
