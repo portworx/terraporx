@@ -1,5 +1,5 @@
-# digitalocean-terraport
-Terraform scripts for digitalocean.com, based on [digitalocean](https://github.com/jmarhee/digitalocean-dcos-terraform)
+# digitalocean-terraporx
+Terraform scripts for digitalocean.com, based on [digitalocean-terraform](https://github.com/jmarhee/digitalocean-dcos-terraform)
 
 ##  This repo will create a "Portworx-ready" DCOS Cluster in Digital Ocean
 
