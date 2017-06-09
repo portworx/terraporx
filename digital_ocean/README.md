@@ -6,10 +6,13 @@ Instances will be created along with a corresponding non-root block volume,
 to be used for the Portworx storage pool.
 
 [centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/centos) brings up a 3-node px-dev cluster on CentOS 7
+
 [coreos](https://github.com/portworx/terraporx/tree/master/digital_ocean/coreos) brings up a 3-node px-dev cluster on CoreOS
+
 [ubuntu](https://github.com/portworx/terraporx/tree/master/digital_ocean/ubuntu16) brings up a 3-node px-dev cluster on Ubuntu 16
 
 [dcos](https://github.com/portworx/terraporx/tree/master/digital_ocean/dcos} brings up a PX-ready DCOS/Mesosphere cluster on CoreOS
+
 [dcos_centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/dcos_centos) brings up a PX-ready DCOS/Mesosphere cluster on CentOS7
 
 The Portworx frameworks can then be installed from [these instructions](https://docs.portworx.com/scheduler/mesosphere-dcos/install.html)
