@@ -11,7 +11,7 @@ to be used for the Portworx storage pool.
 
 [ubuntu](https://github.com/portworx/terraporx/tree/master/digital_ocean/ubuntu16) brings up a 3-node px-dev cluster on Ubuntu 16
 
-[dcos](https://github.com/portworx/terraporx/tree/master/digital_ocean/dcos} brings up a PX-ready DCOS/Mesosphere cluster on CoreOS
+[dcos](https://github.com/portworx/terraporx/tree/master/digital_ocean/dcos) brings up a PX-ready DCOS/Mesosphere cluster on CoreOS
 
 [dcos_centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/dcos_centos) brings up a PX-ready DCOS/Mesosphere cluster on CentOS7
 
