@@ -1,5 +1,5 @@
 output "ip-addrs" {
-   value = [ "${formatlist("ssh -i key root@%s", "${packet_device.centos7.*.network.0.address}")}" ]
+   value = [ "${formatlist("ssh root@%s", "${packet_device.centos7.*.network.0.address}")}" ]
 } 
 
 #    value = [ "${formatlist("ssh -i key root@%s", "${packet_device.centos7.*.network.0.address}")}" ]
