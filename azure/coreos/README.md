@@ -7,6 +7,8 @@ The default OS is CoreOS:Stable:1235.9.0
 The Provider.tf file contains the secrets/credentials that can be obtained via
 https://michaelheap.com/using-azure-resource-manager-with-terraform/
 
+Make sure to install the Azure CLI and do an "az login" before running this.
+
 Follow these instructions to bring up 'etcd' and 'px-dev':
 https://docs.portworx.com/scheduler/docker/install.html
 
