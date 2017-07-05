@@ -1,12 +1,12 @@
 
 variable "packet_api_key" {
   description = "Your packet API key"
-  default = "pHMzxjhGexLfzFzEwCPVKS1ttCKpgb1r"
+  default = ""
 }
 
 variable "packet_project_id" {
   description = "Packet Project ID"
-  default = "13d62654-b7fc-41c2-a149-2401899cadb0"
+  default = ""
 }
 
 variable "etcd_discovery_url" {
@@ -45,5 +45,5 @@ variable "packet_server_type" {
 
 variable "ssh_key_path" {
   description = "Path to your private SSH key for the project"
-  default = "./jeff.key"
+  default = ""
 }
