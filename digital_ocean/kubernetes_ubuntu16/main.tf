@@ -38,8 +38,9 @@ resource "digitalocean_droplet" "master" {
         "sudo cp /etc/kubernetes/admin.conf /root",
         "sudo chown $(id -u):$(id -g) /root/admin.conf",
         "echo \"export KUBECONFIG=/root/admin.conf\" >> /root/.bashrc",
-        "sudo kubectl apply -f kube-flannel-rbac.yml",
-        "sudo kubectl apply -f kube-flannel.yml"
+        "sleep 5",
+        "KUBECONFIG=/root/admin.conf kubectl apply -f kube-flannel-rbac.yml",
+        "KUBECONFIG=/root/admin.conf kubectl apply -f kube-flannel.yml"
       ]
     }
 }
