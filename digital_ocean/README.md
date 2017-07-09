@@ -26,6 +26,8 @@ The Portworx frameworks can then be installed from [these instructions](https://
 ## Portworx-ready Kubernetes cluster
 [kubernetes_ubuntu16](https://github.com/portworx/terraporx/tree/master/digital_ocean/kubernetes_ubuntu16) brings up a PX-ready Kubernetes 1.7 cluster on Ubuntu 16
 
+Portworx can then be installed as a [Kubernetes daemon set](https://docs.portworx.com/scheduler/kubernetes/install.html#install)
+
 ## Destroy/Teardown
 
 To destroy all nodes, run ` terraform destroy --force` .
