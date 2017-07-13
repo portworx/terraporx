@@ -23,7 +23,10 @@ For CoreOS, the implicit 'etcd2' service will be used on all 3 nodes (see "user_
 
 The Portworx frameworks can then be installed from [these instructions](https://docs.portworx.com/scheduler/mesosphere-dcos/install.html)
 
+## Portworx-ready Kubernetes cluster
+[kubernetes_ubuntu16](https://github.com/portworx/terraporx/tree/master/digital_ocean/kubernetes_ubuntu16) brings up a PX-ready Kubernetes 1.7 cluster on Ubuntu 16
 
+Portworx can then be installed as a [Kubernetes daemon set](https://docs.portworx.com/scheduler/kubernetes/install.html#install)
 
 ## Destroy/Teardown
 
