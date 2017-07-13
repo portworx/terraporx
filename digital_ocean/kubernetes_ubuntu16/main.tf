@@ -32,15 +32,14 @@ resource "digitalocean_droplet" "master" {
         "sudo echo \"deb http://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
         "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version}-00 kubeadm=${var.k8s_version}-00 kubectl=${var.k8s_version}-00 kubernetes-cni vim git",
         "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.ipv4_address_private} --pod-network-cidr 10.244.0.0/16 --token ${var.k8s_token}",
-        "sudo curl -O https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml",
-        "sudo curl -O https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml",
+        # "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.ipv4_address_private} --token ${var.k8s_token}",
         "echo \"***** Setting up kubeconfig\"",
         "sudo cp /etc/kubernetes/admin.conf /root",
         "sudo chown $(id -u):$(id -g) /root/admin.conf",
         "echo \"export KUBECONFIG=/root/admin.conf\" >> /root/.bashrc",
+        "echo \"alias kc=kubectl\" >> /root/.bashrc",
         "sleep 5",
-        "KUBECONFIG=/root/admin.conf kubectl apply -f kube-flannel-rbac.yml",
-        "KUBECONFIG=/root/admin.conf kubectl apply -f kube-flannel.yml"
+        "KUBECONFIG=/root/admin.conf kubectl apply -n kube-system -f \"https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&env.IPALLOC_RANGE=10.0.0.0/16\""
       ]
     }
 }
