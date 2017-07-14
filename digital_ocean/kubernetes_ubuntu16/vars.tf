@@ -37,7 +37,8 @@ variable "ssh_fingerprint" {
 }
 
 variable "k8s_version" {
-   default = "1.7.1"
+   # default = "1.7.1"
+  default = "1.7.0"
 }
 
 variable "k8s_token" {
