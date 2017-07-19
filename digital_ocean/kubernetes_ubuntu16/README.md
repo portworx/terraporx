@@ -1,4 +1,4 @@
-## Portworx-ready cluster for Kubernets on Digital Ocean
+## Portworx-ready cluster for Kubernetes on Digital Ocean
 
 This should "just work".
 But if it loops on startup with the messages `JWS token not being created in cluster-info ConfigMap`,
