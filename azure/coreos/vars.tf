@@ -1,8 +1,8 @@
-variable newStorageAccountName  { default = "jssacct" }
+variable newStorageAccountName  { default = "" }
 
 variable vmSize  { default = "Standard_A3" }
 
-variable adminUsername  { default = "jeff" }
+variable adminUsername  { default = "" }
 
 variable sshKeyData  { 
           "default" = ""
