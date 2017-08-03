@@ -1,6 +1,6 @@
 variable "do_token" {
   description = "API Token"
-  default = "e66158358ca25785555df55d825ed757e34fa504d59509df2455a77280892495"
+  default = ""
 }
 
 variable "do_count" {
@@ -40,7 +40,7 @@ variable "pub_key" {
 
 variable "ssh_fingerprint" {
   description = "fingerprint"
-  default = "e2:79:41:e4:f8:82:27:68:79:3f:b3:5e:af:ae:39:1e"
+  default = ""
 }
 
 variable "k8s_version" {
