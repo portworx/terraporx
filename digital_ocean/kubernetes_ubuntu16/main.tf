@@ -5,7 +5,7 @@ provider "digitalocean" {
 
 resource "digitalocean_droplet" "master" {
     image = "ubuntu-16-10-x64"
-    name = "master"
+    name = "${var.prefix}-master"
     region = "${var.region}"
     size = "${var.size}"
     private_networking = true
@@ -30,8 +30,8 @@ resource "digitalocean_droplet" "master" {
         "sudo apt-get -y install docker-ce",
         "sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
         "sudo echo \"deb http://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
-        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version}-00 kubeadm=${var.k8s_version}-00 kubectl=${var.k8s_version}-00 kubernetes-cni vim git",
-        "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.ipv4_address_private} --pod-network-cidr 10.244.0.0/16 --token ${var.k8s_token}",
+        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version} kubeadm=${var.k8s_version} kubectl=${var.k8s_version} kubernetes-cni vim git",
+        "kubeadm init --kubernetes-version v${var.k8s_init_version} --apiserver-advertise-address ${self.ipv4_address_private} --pod-network-cidr 10.244.0.0/16 --token ${var.k8s_token}",
         # "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.ipv4_address_private} --token ${var.k8s_token}",
         "echo \"***** Setting up kubeconfig\"",
         "sudo cp /etc/kubernetes/admin.conf /root",
@@ -57,7 +57,7 @@ resource "digitalocean_droplet" "minion" {
     depends_on = ["digitalocean_volume.px-vol"]
     image = "ubuntu-16-10-x64"
     count = "${var.do_count}"
-    name = "minion-${count.index + 1}"
+    name = "${var.prefix}-minion-${count.index + 1}"
     region = "${var.region}"
     size = "${var.size}"
     private_networking = true
@@ -83,7 +83,7 @@ resource "digitalocean_droplet" "minion" {
         "sudo apt-get -y install docker-ce",
         "sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
         "sudo echo \"deb http://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
-        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version}-00 kubeadm=${var.k8s_version}-00 kubectl=${var.k8s_version}-00 kubernetes-cni vim git",
+        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version} kubeadm=${var.k8s_version} kubectl=${var.k8s_version} kubernetes-cni vim git",
         "kubeadm join --token ${var.k8s_token} ${digitalocean_droplet.master.ipv4_address_private}:6443"
       ]
     }
