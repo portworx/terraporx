@@ -7,14 +7,14 @@ provider "google" {
 
 resource "google_compute_disk" "px-disk" {
   count = "${var.minion-count}"
-  name = "px-disk-${count.index}"
+  name = "${var.prefix}-px-disk-${count.index}"
   type = "pd-ssd"
   zone = "${var.region_zone}"
   size = "${var.volsize}"
 }
 
 resource "google_compute_disk" "px-master-disk" {
-  name = "px-master-disk"
+  name = "${var.prefix}-px-master-disk"
   type = "pd-ssd"
   zone = "${var.region_zone}"
   size = "${var.volsize}"
@@ -22,7 +22,7 @@ resource "google_compute_disk" "px-master-disk" {
 
 resource "google_compute_instance" "k8s_master" {
 
-  name         = "k8s-master"
+  name         = "${var.prefix}-k8s-master"
   machine_type = "${var.machine_type}"
   zone         = "${var.region_zone}"
 
@@ -64,9 +64,8 @@ resource "google_compute_instance" "k8s_master" {
         "sudo apt-get -y install docker-ce",
         "sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
         "sudo echo \"deb http://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
-        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version}-00 kubeadm=${var.k8s_version}-00 kubectl=${var.k8s_version}-00 kubernetes-cni vim git",
-        "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.network_interface.0.address} --pod-network-cidr 10.244.0.0/16 --token ${var.k8s_token}",
-        "kubeadm init --kubernetes-version v${var.k8s_version} --apiserver-advertise-address ${self.network_interface.0.address} --token ${var.k8s_token}",
+        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version} kubeadm=${var.k8s_version} kubectl=${var.k8s_version} kubernetes-cni vim git",
+        "kubeadm init --kubernetes-version v${var.k8s_init_version} --apiserver-advertise-address ${self.network_interface.0.address} --pod-network-cidr 10.244.0.0/16 --token ${var.k8s_token}",
         "echo \"***** Setting up kubeconfig\"",
         "sudo cp /etc/kubernetes/admin.conf /root",
         "sudo chown $(id -u):$(id -g) /root/admin.conf",
@@ -85,7 +84,7 @@ resource "google_compute_instance" "k8s_master" {
 resource "google_compute_instance" "k8s_minion" {
   count = "${var.minion-count}"
 
-  name         = "k8s-${count.index}"
+  name         = "{var.prefix}-k8s-${count.index}"
   machine_type = "${var.machine_type}"
   zone         = "${var.region_zone}"
 
@@ -128,7 +127,7 @@ resource "google_compute_instance" "k8s_minion" {
         "sudo apt-get -y install docker-ce",
         "sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -",
         "sudo echo \"deb http://apt.kubernetes.io/ kubernetes-xenial main\" | sudo tee /etc/apt/sources.list.d/kubernetes.list",
-        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version}-00 kubeadm=${var.k8s_version}-00 kubectl=${var.k8s_version}-00 kubernetes-cni vim git",
+        "sudo apt-get update && sudo apt-get install -y kubelet=${var.k8s_version} kubeadm=${var.k8s_version} kubectl=${var.k8s_version} kubernetes-cni vim git",
         "kubeadm join --token ${var.k8s_token} ${google_compute_instance.k8s_master.network_interface.0.address}:6443"
       ]
     }
