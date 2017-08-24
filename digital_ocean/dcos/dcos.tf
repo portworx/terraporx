@@ -6,11 +6,11 @@ resource "digitalocean_droplet" "dcos_bootstrap" {
   name = "${format("${var.dcos_cluster_name}-bootstrap-%02d", count.index)}"
   
   image = "coreos-stable"
+  private_networking = true
   size             = "${var.boot_size}"
-    ssh_keys = ["${var.ssh_key_fingerprint}"]
+  ssh_keys = ["${var.ssh_key_fingerprint}"]
   connection {
     user = "core"
-    private_networking = true
     private_key = "${file(var.dcos_ssh_key_path)}"
   }
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
@@ -57,13 +57,13 @@ resource "digitalocean_droplet" "dcos_master" {
   name = "${format("${var.dcos_cluster_name}-master-%02d", count.index)}"
   image = "coreos-stable"
   size             = "${var.master_size}"
+  private_networking = true
 
   ssh_keys = ["${var.ssh_key_fingerprint}"]
 
   count         = "${var.dcos_master_count}"
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
   region      = "${var.region}"
-    private_networking = true
   connection {
     user = "core"
     private_key = "${file(var.dcos_ssh_key_path)}"
@@ -98,12 +98,12 @@ resource "digitalocean_droplet" "dcos_agent" {
   name = "${format("${var.dcos_cluster_name}-agent-%02d", count.index)}"
   depends_on = ["digitalocean_droplet.dcos_bootstrap", "digitalocean_volume.px-vol"]
   image = "coreos-stable"
+  private_networking = true
   size          = "${var.agent_size}"
   count         = "${var.dcos_agent_count}"
   volume_ids = ["${element("${digitalocean_volume.px-vol.*.id}",count.index)}"]
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
   region      = "${var.region}"
-    private_networking = true
   ssh_keys = ["${var.ssh_key_fingerprint}"]
   connection {
     user = "core"
@@ -126,11 +126,11 @@ resource "digitalocean_droplet" "dcos_public_agent" {
   name = "${format("${var.dcos_cluster_name}-public-agent-%02d", count.index)}"
   depends_on = ["digitalocean_droplet.dcos_bootstrap"]
   image = "coreos-stable"
+  private_networking = true
   size          = "${var.agent_size}"
   count         = "${var.dcos_public_agent_count}"
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.dcos_ssh_public_key_path}")}\"\n"
   region      = "${var.region}"
-    private_networking = true
   ssh_keys = ["${var.ssh_key_fingerprint}"]
   connection {
     user = "core"

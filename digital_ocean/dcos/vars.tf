@@ -9,12 +9,10 @@ variable "ssh_key_fingerprint" {
 
 variable "region" {
   description = "DigitalOcean Block storage only available in : fra1, nyc1, sfo2 and sgp1"
-  default = "sfo2"
 }
 
 variable "agent_size" {
   description = "DCOS Agent Droplet Size [ 8GB, 16GB, 32GB, 48GB, 64GB ]"
-  default = "8GB"
 }
 
 variable "master_size" {
@@ -29,7 +27,7 @@ variable "boot_size" {
 
 variable "dcos_cluster_name" {
   description = "Name of your cluster. Alpha-numeric and hyphens only, please."
-  default = "jeff-dcos"
+  default = "my-dcos"
 }
 
 variable "dcos_master_count" {
@@ -49,15 +47,17 @@ variable "dcos_public_agent_count" {
 
 variable "dcos_ssh_public_key_path" {
   description = "Path to your public SSH key path"
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "dcos_installer_url" {
   description = "Path to get DCOS"
-  default = "https://downloads.dcos.io/dcos/EarlyAccess/dcos_generate_config.sh"
+  default = "https://downloads.dcos.io/dcos/stable/1.9.2/dcos_generate_config.sh"
 }
 
 variable "dcos_ssh_key_path" {
   description = "Path to your private SSH key for the project"
+  default = "~/.ssh/id_rsa"
 }
 
 variable "volsize" {
