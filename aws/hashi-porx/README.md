@@ -69,7 +69,7 @@ $ export AWS_SECRET_ACCESS_KEY = "[AWS_SECRET_ACCESS_KEY]"
 
 ```
 git clone https://github.com/portworx/terraporx
-cd aws/hashi-porx
+cd terraporx/aws/hashi-porx
 terraform get
 terraform plan
 terraform apply
