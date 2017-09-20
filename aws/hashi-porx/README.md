@@ -68,8 +68,8 @@ $ export AWS_SECRET_ACCESS_KEY = "[AWS_SECRET_ACCESS_KEY]"
 ### Launch Stack
 
 ```
-git clone https://github.com/jsilberm/hashi-porx
-cd hashi-porx
+git clone https://github.com/portworx/terraporx
+cd aws/hashi-porx
 terraform get
 terraform plan
 terraform apply
