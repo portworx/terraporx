@@ -56,7 +56,7 @@ Deploys Portworx as a `system` service through Nomad with the [portworx.nomad](.
 
 ## Launch
 
-### Prerequisits
+### Prerequisites
 Ensure that the following environment variables are set:
 
 ```
