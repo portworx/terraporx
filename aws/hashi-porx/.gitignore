@@ -1,0 +1,7 @@
+*.tfstate
+*.tfstate.backup
+.DS_Store
+.envrc
+.terraform
+tags
+nomad/.instance.tf.swp

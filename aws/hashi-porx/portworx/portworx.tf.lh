@@ -1,0 +1,21 @@
+variable "nomad_alb" { }
+variable "px_token" {}
+
+data "template_file" "px_lh" {
+      template = "${file("${path.module}/portworx-lh.tpl")}"
+
+      vars {
+           px_token = "${var.px_token}"
+      }
+}
+
+# Configure the Nomad provider
+provider "nomad" {
+  address = "http://${var.nomad_alb}:4646"
+  region  = "global"
+}
+
+# Register a job
+resource "nomad_job" "portwx" {
+  jobspec = "${data.template_file.px_lh.rendered}"
+}
