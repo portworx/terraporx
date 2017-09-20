@@ -1,4 +1,4 @@
-# Hashi-porx
+# Hashi-Porx
 
 ## Intro
 
@@ -158,5 +158,5 @@ Successfully set cluster secret key!
 * Cross AZ availability
 * ASG's for Vault
 * HA for Vault   
-* Cleanup hardcoded stuff
+* PX for vault/nomad persistent backend storage ???
 
