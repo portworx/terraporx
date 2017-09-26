@@ -26,7 +26,7 @@ There should be free/clear access for 'ssh' login to all nodes without any promp
 
 ## Run All-in-One
 ```
-ansible-playbook -i inv.yml play
+ansible-playbook -i inv play.yml
 ```
 
 ## Verify
