@@ -1,0 +1,7 @@
+#!/bin/bash
+echo '[nodes]'
+for i in `vagrant status | grep running | awk '{print $1}'`
+do
+  IP=`vagrant ssh $i -- /sbin/ip addr show eth1 | grep 'inet ' | awk '{print $2}' | sed -s 's/\/.*//'`
+  echo $i IP=$IP
+done
