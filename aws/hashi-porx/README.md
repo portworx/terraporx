@@ -1,4 +1,4 @@
-# Hashi-porx
+# "T2" (Hashi-Porx)
 
 ## Intro
 
@@ -27,7 +27,7 @@ Added an EBS volume to the `aws_launch_configuration` in [nomad/instance.tf](./n
   }
 ```
 
-Changed Nomad Client config [nomad-client-hcl.tpl](./nomad/templates/nomad-client-hcl.tpl) to allow launching of Portworx:
+Changed Nomad Client config [nomad-client-hcl.tpl](./nomad/templates/nomad-client.hcl.tpl) to allow launching of Portworx:
 ```
 client {
   enabled = true
@@ -56,7 +56,7 @@ Deploys Portworx as a `system` service through Nomad with the [portworx.nomad](.
 
 ## Launch
 
-### Prerequisits
+### Prerequisites
 Ensure that the following environment variables are set:
 
 ```
@@ -111,7 +111,7 @@ ssh ubuntu@<IPaddr> "VAULT_ADDR='http://127.0.0.1:8200' vault status"
 
 Verify Portworx is operational.
 
-Logon to a nomad client:
+Login to a nomad client:
 
 ```
 ssh ubuntu@<IPaddr> sudo /opt/pwx/bin/pxctl status
@@ -152,9 +152,10 @@ Successfully set cluster secret key!
 
 ## Caveats
 
-* Terraform Nomad provider tries to bring up Portworx before Nomad is ready.  (Rerun "apply")
+* Terraform Nomad provider can try to bring up Portworx before Nomad is ready.  (Workaround: rerun "terraform apply")
 
 ## ToDo / Next
+* Automate the Vault login and secret setting for Portworx
 * Cross AZ availability
 * ASG's for Vault
 * HA for Vault   
