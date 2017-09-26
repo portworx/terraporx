@@ -1,0 +1,6 @@
+[nodes]
+test1 IP=70.0.68.203
+test2 IP=70.0.68.204
+test3 IP=70.0.68.205
+[lighthouse]
+test1 IP=70.0.68.203
