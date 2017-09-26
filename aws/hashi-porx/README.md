@@ -68,8 +68,8 @@ $ export AWS_SECRET_ACCESS_KEY = "[AWS_SECRET_ACCESS_KEY]"
 ### Launch Stack
 
 ```
-git clone https://github.com/jsilberm/hashi-porx
-cd hashi-porx
+git clone https://github.com/portworx/terraporx
+cd terraporx/aws/hashi-porx
 terraform get
 terraform plan
 terraform apply
@@ -122,16 +122,16 @@ ssh ubuntu@<IPaddr> sudo /opt/pwx/bin/pxctl status
 ### Connect Portworx to Vault
 
 On the vault server, note Root Token via `grep Root /var/log/vault.log`
-
-On nomad/portworx client, use the above `Root Token` as the `VAULT_TOKEN` below:
+Use the values to create a secret key:
 
 ```
 root@ip-10-1-1-197:/etc# export VAULT_TOKEN=d5981a2f-c617-0b87-1bcc-94bba8d6b317
+root@ip-10-1-1-197:/etc# export VAULT_ADDR='http://127.0.0.1:8200'
 root@ip-10-1-1-197:/etc# vault write secret/hello value=world
 Success! Data written to: secret/hello
 ```
-
-Have Portworx login to the Vault server:
+On nomad/portworx client, use the above `Root Token` as the `VAULT_TOKEN` below
+as Portworx does login to the Vault server:
 
 ```
 root@ip-10-1-1-34:~# /opt/pwx/bin/pxctl secrets vault login
@@ -159,5 +159,5 @@ Successfully set cluster secret key!
 * Cross AZ availability
 * ASG's for Vault
 * HA for Vault   
-* Cleanup hardcoded stuff
+* PX for vault/nomad persistent backend storage ???
 

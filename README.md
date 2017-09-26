@@ -4,7 +4,7 @@ This repo contains a number of reference stack examples for how to deploy Portwo
 
 The initial repository include examples for deploying Portworx across the following Providers:
 
-* [AWS-EC2](https://github.com/portworx/terraporx/tree/master/aws)
+* [AWS](https://github.com/portworx/terraporx/tree/master/aws/hashi-porx)
 * [Azure](https://github.com/portworx/terraporx/tree/master/azure)
 * [GoogleCloudPlatform](https://github.com/portworx/terraporx/tree/master/gcp)
 * [Digital Ocean](https://github.com/portworx/terraporx/tree/master/digital_ocean)
