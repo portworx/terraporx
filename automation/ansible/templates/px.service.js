@@ -19,6 +19,7 @@ ExecStart=/usr/bin/docker run --net=host --privileged=true \
       -v /var/run/docker.sock:/var/run/docker.sock   \
       -v /var/cores:/var/cores                       \
       -v ${HOSTDIR}:${HOSTDIR}                       \
+      -e API_SERVER=http://{{hostvars[groups['lighthouse'][0]]['IP']}}
       --name=%n \
       portworx/px-enterprise -t {{ hostvars[groups['lighthouse'][0]]['token'].stdout }} -a -f
 KillMode=control-group
