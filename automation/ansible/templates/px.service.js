@@ -6,7 +6,6 @@ After=docker.service
 TimeoutStartSec=0
 Restart=always
 ExecStartPre=/usr/bin/bash -c "/usr/bin/systemctl set-environment HOSTDIR=`if uname -r | grep -i coreos > /dev/null; then echo /lib/modules; else echo /usr/src; fi`"
-Environment=API_SERVER={{hostvars[groups['lighthouse'][0]]['IP']}}
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm -f %n
 ExecStart=/usr/bin/docker run --net=host --privileged=true \
@@ -19,7 +18,7 @@ ExecStart=/usr/bin/docker run --net=host --privileged=true \
       -v /var/run/docker.sock:/var/run/docker.sock   \
       -v /var/cores:/var/cores                       \
       -v ${HOSTDIR}:${HOSTDIR}                       \
-      -e API_SERVER=http://{{hostvars[groups['lighthouse'][0]]['IP']}}
+      -e API_SERVER=http://{{hostvars[groups['lighthouse'][0]]['IP']}}   \
       --name=%n \
       portworx/px-enterprise -t {{ hostvars[groups['lighthouse'][0]]['token'].stdout }} -a -f
 KillMode=control-group
