@@ -5,7 +5,6 @@ After=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStartPre=/usr/bin/bash -c "/usr/bin/systemctl set-environment HOSTDIR=`if uname -r | grep -i coreos > /dev/null; then echo /lib/modules; else echo /usr/src; fi`"
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm -f %n
 ExecStart=/usr/bin/docker run --net=host --privileged=true \
@@ -17,7 +16,7 @@ ExecStart=/usr/bin/docker run --net=host --privileged=true \
       -v /opt/pwx/bin:/export_bin:shared             \
       -v /var/run/docker.sock:/var/run/docker.sock   \
       -v /var/cores:/var/cores                       \
-      -v ${HOSTDIR}:${HOSTDIR}                       \
+      -v /usr/src:/usr/src                           \
       -e API_SERVER=http://{{hostvars[groups['lighthouse'][0]]['IP']}}   \
       --name=%n \
       portworx/px-enterprise -t {{ hostvars[groups['lighthouse'][0]]['token'].stdout }} -a -f -m {{ ansible_default_ipv4.interface }} -d {{ ansible_default_ipv4.interface }}
