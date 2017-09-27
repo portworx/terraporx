@@ -42,8 +42,18 @@ Vagrant.configure(2) do |config|
         v.customize ["modifyvm", :id, "--memory", opts[:mem]]
         v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
       end
+      config.vm.provision "shell" do |s|
+             ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+             s.inline = <<-SHELL
+               echo "Fixing ROOT access ..."
+               sudo ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
+               echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+               echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
+             SHELL
+       end
 
       config.vm.network :private_network, ip: opts[:eth1]
+      
     end
   end
 end
