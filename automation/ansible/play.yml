@@ -1,12 +1,19 @@
 ---
 - hosts: all
   remote_user: root
+  gather_facts: False
+  pre_tasks:
+  - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  - setup: # aka gather_facts
+
   vars:
        members: "{{ groups['nodes'] }}"
        lighthouse: "{{ groups['lighthouse'] }}"
        etcd_version: "3.2.7"
        docker_compose_version: "1.16.1"
   tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
   - name: Remove any old existing etcd
     package: 
       name: etcd
