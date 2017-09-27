@@ -26,7 +26,6 @@ px_conf = {             # Portworx config
 # - limitation note: can use only 1 drive on VM's w/ IDE controller
 # see https://atlas.hashicorp.com/search? for more VM images (ie. "box-names")
 vm_conf = {
-   'ubuntu14' => [ 'ubuntu/trusty64', 'eth1', 'SATAController', 1 ],
    'ubuntu16' => [ 'ubuntu/xenial64', 'enp0s8', 'SCSI', 2 ],
    'centos7'  => [ 'centos/7', 'eth1', 'IDE', 1 ],
 }
