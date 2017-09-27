@@ -16,8 +16,8 @@ services :
       - influx-px
     environment :
       - PWX_INFLUXDB="http://influx-px:8086"
-      - PWX_INFLUXUSR="admin"
-      - PWX_INFLUXPW="password"
+      - PWX_INFLUXUSR={{ admin_user }}
+      - PWX_INFLUXPW={{ admin_password }}
       - PWX_HOSTNAME="http://{{ hostvars[groups['lighthouse'][0]].IP }}"
       - PWX_PX_PRECREATE_ADMIN=true
       - PWX_PX_COMPANY_NAME=yourcompany
@@ -28,7 +28,7 @@ services :
       - -k
       - {% for host in members %}etcd:http://{{ hostvars[host].IP}}:2379{{ '\n' if loop.last else ','}}{% endfor %}
       - -d
-      - http://${PWX_INFLUXUSR}:${PWX_INFLUXPW}@http://{{ hostvars[groups['lighthouse'][0]].IP }}:8086
+      - http://{{ admin_user }}:{{ admin_password}}@http://{{ hostvars[groups['lighthouse'][0]].IP }}:8086
 
   influx-px :
     image : tutum/influxdb
@@ -42,7 +42,7 @@ services :
       - "8086:8086"
     environment :
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - ADMIN_USER="admin"
-      - INFLUXDB_INIT_PWD="password"
+      - ADMIN_USER={{ admin_user }}
+      - INFLUXDB_INIT_PWD={{ admin_password }}
       - PRE_CREATE_DB="px_stats"
 
