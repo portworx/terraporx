@@ -20,7 +20,7 @@ ExecStart=/usr/bin/docker run --net=host --privileged=true \
       -v ${HOSTDIR}:${HOSTDIR}                       \
       -e API_SERVER=http://{{hostvars[groups['lighthouse'][0]]['IP']}}   \
       --name=%n \
-      portworx/px-enterprise -t {{ hostvars[groups['lighthouse'][0]]['token'].stdout }} -a -f
+      portworx/px-enterprise -t {{ hostvars[groups['lighthouse'][0]]['token'].stdout }} -a -f -m {{ ansible_default_ipv4.interface }} -d {{ ansible_default_ipv4.interface }}
 KillMode=control-group
 ExecStop=/usr/bin/docker stop -t 10 %n
 [Install]
