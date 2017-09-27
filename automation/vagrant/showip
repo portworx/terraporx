@@ -1,7 +1,12 @@
 #!/bin/bash
+if [ $# -ne 1 ]
+then
+    echo Usage: $0 ifname
+    exit 1
+fi
 echo '[nodes]'
 for i in `vagrant status | grep running | awk '{print $1}'`
 do
-  IP=`vagrant ssh $i -- /sbin/ip addr show eth1 | grep 'inet ' | awk '{print $2}' | sed -s 's/\/.*//'`
+  IP=`vagrant ssh $i -- /sbin/ip addr show $1 | grep 'inet ' | awk '{print $2}' | sed -s 's/\/.*//'`
   echo $i IP=$IP
 done
