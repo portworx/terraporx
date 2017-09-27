@@ -28,7 +28,7 @@ services :
       - -k
       - {% for host in members %}etcd:http://{{ hostvars[host].IP}}:2379{{ '\n' if loop.last else ','}}{% endfor %}
       - -d
-      - http://{{ admin_user }}:{{ admin_password}}@http://{{ hostvars[groups['lighthouse'][0]].IP }}:8086
+      - http://{{ admin_user }}:{{ admin_password}}@{{ hostvars[groups['lighthouse'][0]].IP }}:8086
 
   influx-px :
     image : tutum/influxdb
