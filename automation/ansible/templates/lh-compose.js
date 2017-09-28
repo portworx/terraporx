@@ -18,7 +18,7 @@ services :
       - PWX_INFLUXDB="http://influx-px:8086"
       - PWX_INFLUXUSR={{ admin_user }}
       - PWX_INFLUXPW={{ admin_password }}
-      - PWX_HOSTNAME="http://{{ hostvars[groups['lighthouse'][0]].IP }}"
+      - PWX_HOSTNAME="{{ hostvars[groups['lighthouse'][0]].IP }}"
       - PWX_PX_PRECREATE_ADMIN=true
       - PWX_PX_COMPANY_NAME=yourcompany
       - PWX_PX_ADMIN_EMAIL=portworx@yourcompany.com
