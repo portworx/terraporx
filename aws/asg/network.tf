@@ -39,23 +39,41 @@ resource "aws_subnet" "default" {
     "Name" = "${var.namespace}"
   }
 }
-
 # A security group that makes the instances accessible
 resource "aws_security_group" "default" {
   name_prefix = "${var.namespace}"
   vpc_id      = "${aws_vpc.default.id}"
+}
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+variable "ingress_ports" {
+  default = ["22", "80", "443", "8080"]
+}
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_security_group_rule" "ingress" {
+  count = "${length(var.ingress_ports)}"
+
+  type        = "ingress"
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port   = "${element(var.ingress_ports, count.index)}"
+  to_port     = "${element(var.ingress_ports, count.index)}"
+  security_group_id = "${aws_security_group.default.id}"
+}
+
+resource "aws_security_group_rule" "ingress_internal" {
+  type        = "ingress"
+  protocol    = "-1"
+  self        = true
+  from_port   = 0
+  to_port     = 0
+  security_group_id = "${aws_security_group.default.id}"
+}
+
+resource "aws_security_group_rule" "egress_all" {
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.default.id}"
 }
