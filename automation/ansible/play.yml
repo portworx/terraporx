@@ -93,7 +93,7 @@
     when: inventory_hostname in groups['lighthouse']
   - name: Get Cluster Token
     shell: |
-      curl -XPOST -H 'Accept:application/json' -H 'Authorization:Basic cG9ydHdvcnhAeW91cmNvbXBhbnkuY29tOmFkbWlu'  http://{{ hostvars[groups['lighthouse'][0]].IP }}/api/clusters/create/\?name\=my-cluster\&clusterid\=my-cluster1
+      curl -XPOST -H 'Accept:application/json' -H 'Authorization:Basic cG9ydHdvcnhAeW91cmNvbXBhbnkuY29tOmFkbWlu'  http://{{ hostvars[groups['lighthouse'][0]].IP }}/api/clusters/create/\?name\=my-cluster\&clusterid\=my-cluster
     register: token
     when: inventory_hostname in groups['lighthouse']
   - debug: msg="{{ token.stdout_lines[0] }}"
