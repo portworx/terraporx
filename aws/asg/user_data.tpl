@@ -1,8 +1,8 @@
 #!/bin/bash
 set -xv
 terraform_version="0.10.6"
-aws_access_key="AKIAJMLQEGOTMVSCJOHQ"
-aws_secret_key="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"
+aws_access_key=""
+aws_secret_key=""
 aws_region="us-east-2"
 volsize=60
 target_instances=5
