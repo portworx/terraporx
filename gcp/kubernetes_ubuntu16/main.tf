@@ -26,12 +26,14 @@ resource "google_compute_instance" "k8s_master" {
   machine_type = "${var.machine_type}"
   zone         = "${var.region_zone}"
 
-  disk {
-    image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+  boot_disk {
+    initialize_params {
+        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+    }
   }
 
-  disk {
-    disk = "${google_compute_disk.px-master-disk.name}"
+  attached_disk {
+        source      = "${google_compute_disk.px-master-disk.0.self_link}"
   }
 
   network_interface {
@@ -84,17 +86,18 @@ resource "google_compute_instance" "k8s_master" {
 resource "google_compute_instance" "k8s_minion" {
   count = "${var.minion-count}"
 
-  name         = "{var.prefix}-k8s-${count.index}"
+  name         = "${var.prefix}-k8s-${count.index}"
   machine_type = "${var.machine_type}"
   zone         = "${var.region_zone}"
 
-  disk {
-    image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
-    # image = "ubuntu-os-cloud/ubuntu-1404-trusty-v20160602"
+  boot_disk {
+    initialize_params {
+        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+    }
   }
 
-  disk {
-    disk = "${element(google_compute_disk.px-disk.*.name, count.index)}"
+  attached_disk {
+    source      = "${element(google_compute_disk.px-disk.*.self_link, count.index)}"
   }
 
   network_interface {

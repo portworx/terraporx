@@ -1,12 +1,13 @@
-variable "project_name" { default = "portworx-poc" }
+variable "project_name" { default = "" }
 
 variable "machine_type" {  default = "n1-standard-2" }
 
 variable "region" {  default = "us-central1" }
 
+
 variable "region_zone" { default = "us-central1-f" }
 
-variable "prefix" { default = "jeff" }
+variable "prefix" { default = "mypx" }
 
 variable "minion-count" {
   description = "# minions"
@@ -15,7 +16,7 @@ variable "minion-count" {
 
 variable "credentials_file_path" {
   description = "Path to the JSON file used to describe your account credentials"
-  default     = "/Users/jeff/Downloads/Portworx-POC-LiquidWeb.json"
+  default     = ""
 }
 
 variable "volsize" {
