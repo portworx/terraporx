@@ -12,6 +12,7 @@ ExecStart=/usr/bin/docker run --net=host --privileged=true \
       -v /run/docker/plugins:/run/docker/plugins     \
       -v /var/lib/osd:/var/lib/osd:shared            \
       -v /dev:/dev                                   \
+      -v /mnt:/mnt:shared                            \
       -v /etc/pwx:/etc/pwx                           \
       -v /opt/pwx/bin:/export_bin:shared             \
       -v /var/run/docker.sock:/var/run/docker.sock   \

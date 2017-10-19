@@ -35,6 +35,7 @@
          mkdir -p /var/lib/etcd
          chown -R root:root /var/lib/etcd
          chmod -R a+rw /var/lib/etcd
+    when: inventory_hostname in groups['nodes']
   - name: Install new etcd
     shell: |
          wget https://github.com/coreos/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz
@@ -43,6 +44,7 @@
          cd /tmp/etcd-v{{ etcd_version }}-linux-amd64
          mv etcd etcdctl /usr/local/bin
          chmod 755 /usr/local/bin/etcd /usr/local/bin/etcdctl
+    when: inventory_hostname in groups['nodes']
   - name: Create etcd3.service file
     template:
        src: ./templates/etcd3.service.js
@@ -50,11 +52,13 @@
        owner: root
        group: root
        mode: 0644
+    when: inventory_hostname in groups['nodes']
   - name: Reload and start the services
     shell: |
        systemctl daemon-reload
        systemctl enable etcd3.service
        systemctl start  etcd3.service
+    when: inventory_hostname in groups['nodes']
   - name: Install Docker
     shell: |
        curl -sSL https://get.docker.com | sh -s > /dev/null
@@ -105,8 +109,10 @@
        owner: root
        group: root
        mode: 0644
+    when: inventory_hostname in groups['nodes']
   - name: Reload and start the services
     shell: |
        systemctl daemon-reload
        systemctl enable portworx.service
        systemctl start  portworx.service
+    when: inventory_hostname in groups['nodes']
