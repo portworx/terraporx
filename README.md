@@ -18,3 +18,5 @@ The initial repository include examples for deploying Portworx across the follow
 The goal for the *Terraporx Repo* is to provide a community resource for sharing various Terraform configurations
 that make it easier to deploy and manage Portworx.    If you see potential enhancements to the existing content, 
 or would like to contribute your own, please feel free to submit issues or pull-requests against this repo.
+
+For support related issues and problems related to *Terraporx*, please open a github issue for this repo.
