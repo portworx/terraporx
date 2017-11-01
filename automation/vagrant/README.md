@@ -13,7 +13,7 @@ Since `ubuntu14` does not support `systemd`, it's not included here.
 Extracting the appropriate IP addrs, and getting things ready for and `ansible` provision
 is a bit of a pain.
 
-Best for now is to run :  `vagrant ssh test1 -- ip a show` to see which interfaces are available,
+Best for now is to run :  `vagrant ssh test1 -- /sbin/ip a show` to see which interfaces are available,
 and then run : `./showip <interface>` to populate the ansible inventory and `/etc/hosts` files.
 
 
