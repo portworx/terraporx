@@ -36,11 +36,11 @@ variable "public_key_path" {
 }
 
 variable "k8s_version" {
-   default = "1.7.3-01"
+   default = "1.8.3-00"
 }
 
 variable "k8s_init_version" {
-   default = "1.7.3"
+   default = "1.8.3"
 }
 
 variable "k8s_token" {
