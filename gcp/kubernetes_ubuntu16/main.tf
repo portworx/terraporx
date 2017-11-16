@@ -28,7 +28,7 @@ resource "google_compute_instance" "k8s_master" {
 
   boot_disk {
     initialize_params {
-        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+        image = "ubuntu-1604-xenial-v20170328"
     }
   }
 
@@ -92,7 +92,7 @@ resource "google_compute_instance" "k8s_minion" {
 
   boot_disk {
     initialize_params {
-        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+        image = "ubuntu-1604-xenial-v20170328"
     }
   }
 
