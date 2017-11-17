@@ -1,9 +1,13 @@
+
+#Project Name - use the project-id for your GCP project
 variable "project_name" { default = "" }
 
+# HostIP for your Master where the ETCD server will be installed
 variable "HostIP" {
    default = "10.128.0.2"
 } 
 
+# GCP Console: IAM & Admin -> Service Accounts -> Compute Engine Default Service Account -> Create Key 
 variable "credentials_file_path" {
   description = "Path to the JSON file used to describe your account credentials"
   default     = ""
