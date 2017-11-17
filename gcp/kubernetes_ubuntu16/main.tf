@@ -28,7 +28,7 @@ resource "google_compute_instance" "k8s_master" {
 
   boot_disk {
     initialize_params {
-        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+        image = "ubuntu-1604-xenial-v20170328"
     }
   }
 
@@ -74,11 +74,11 @@ resource "google_compute_instance" "k8s_master" {
         "echo \"export KUBECONFIG=/root/admin.conf\" >> /root/.bashrc",
         "echo \"alias kc=kubectl\" >> /root/.bashrc",
         "sleep 5",
-        "KUBECONFIG=/root/admin.conf kubectl apply -n kube-system -f \"https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&env.IPALLOC_RANGE=10.0.0.0/16\""
+        "KUBECONFIG=/root/admin.conf kubectl apply -n kube-system -f \"https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&env.IPALLOC_RANGE=10.0.0.0/16\"",
+        "docker run --net=host -d --name etcd-v3.1.3 --volume=/tmp/etcd-data:/etcd-data quay.io/coreos/etcd:v3.1.3 /usr/local/bin/etcd --name my-etcd-1  --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2479 --advertise-client-urls http://${var.HostIP}:2479 --listen-peer-urls http://0.0.0.0:2480 --initial-advertise-peer-urls http://${var.HostIP}:2480  --initial-cluster my-etcd-1=http://${var.HostIP}:2480  --initial-cluster-token my-etcd-token --initial-cluster-state new --auto-compaction-retention 1"
       ]
     }
 }
-
 
 
 
@@ -92,7 +92,7 @@ resource "google_compute_instance" "k8s_minion" {
 
   boot_disk {
     initialize_params {
-        image = "ubuntu-os-cloud/ubuntu-1610-yakkety-v20170619a"
+        image = "ubuntu-1604-xenial-v20170328"
     }
   }
 
