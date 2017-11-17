@@ -1,9 +1,17 @@
 variable "project_name" { default = "" }
 
+variable "HostIP" {
+   default = "10.128.0.2"
+} 
+
+variable "credentials_file_path" {
+  description = "Path to the JSON file used to describe your account credentials"
+  default     = ""
+}
+
 variable "machine_type" {  default = "n1-standard-2" }
 
 variable "region" {  default = "us-central1" }
-
 
 variable "region_zone" { default = "us-central1-f" }
 
@@ -12,11 +20,6 @@ variable "prefix" { default = "mypx" }
 variable "minion-count" {
   description = "# minions"
   default = 3
-}
-
-variable "credentials_file_path" {
-  description = "Path to the JSON file used to describe your account credentials"
-  default     = ""
 }
 
 variable "volsize" {
