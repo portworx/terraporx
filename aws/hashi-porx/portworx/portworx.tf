@@ -9,12 +9,13 @@ provider "nomad" {
 resource "null_resource" "px_pause" {
   #  Need time to settle before submitting
   provisioner "local-exec" {
-       command = "/bin/sleep 120"
+       command = "echo 'Sleeping ...' && /bin/sleep 360"
   } 
 }
 
-# Register a job
-resource "nomad_job" "portwx" {
+# Run portworx
+resource "nomad_job" "pxintsaller" {
   depends_on = [ "null_resource.px_pause" ]
   jobspec = "${file("${path.module}/portworx.nomad")}"
 }
+
