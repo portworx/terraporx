@@ -15,6 +15,7 @@ and resources will be scoped under this namespace.
 It is best if you add this to your .tfvars file so you do not need to type
 it manually with each run
 EOH
+  default = "jeff"
 }
 
 variable "vpc_cidr_block" {
@@ -29,17 +30,20 @@ variable "cidr_blocks" {
 
 variable "consul_version" {
   description = "Consul version to install"
-  default = "0.9.0"
+  # default = "0.9.0"
+  default = "1.0.2"
 }
 
 variable "nomad_version" {
   description = "Nomad version to install"
-  default = "0.6.3"
+  # default = "0.6.3"
+  default = "0.7.1"
 }
 
 variable "hashiui_version" {
   description = "Hashi-ui version to install"
-  default = "0.13.6"
+  # default = "0.13.6"
+  default = "0.22.0"
 }
 
 variable "consul_join_tag_key" {
