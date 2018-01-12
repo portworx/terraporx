@@ -28,6 +28,7 @@ module "servers" {
   nomad_version = "${var.nomad_version}"
 
   hashiui_enabled = false
+  portworx_enabled = false
 }
 
 module "clients" {
@@ -56,4 +57,6 @@ module "clients" {
 
   hashiui_enabled = true
   hashiui_version = "${var.hashiui_version}"
+
+  portworx_enabled = true
 }

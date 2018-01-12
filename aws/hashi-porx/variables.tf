@@ -15,7 +15,7 @@ and resources will be scoped under this namespace.
 It is best if you add this to your .tfvars file so you do not need to type
 it manually with each run
 EOH
-  default = "myname"
+  default = "jeffpx"
 }
 
 variable "vpc_cidr_block" {
@@ -79,4 +79,3 @@ variable "aws_region" {
    default = "us-east-2"
 }
 
-#  variable "px_token" {}

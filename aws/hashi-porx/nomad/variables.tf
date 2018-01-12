@@ -83,6 +83,11 @@ variable "hashiui_version" {
   default     = "0.3.6"
 }
 
+# Portworx configuration
+variable "portworx_enabled" {
+  description = "Is Portworx Enabled on this instance"
+}
+
 variable "volsize" {
    description = "Extra EBS volsize"
    default = 50

@@ -33,6 +33,8 @@ data "template_file" "startup" {
 
     hashiui_enabled = "${var.hashiui_enabled}"
     hashiui_version = "${var.hashiui_version}"
+
+    portworx_enabled = "${var.portworx_enabled}"
   }
 }
 
