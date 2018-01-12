@@ -15,7 +15,7 @@ and resources will be scoped under this namespace.
 It is best if you add this to your .tfvars file so you do not need to type
 it manually with each run
 EOH
-  default = "jeff"
+  default = "myname"
 }
 
 variable "vpc_cidr_block" {
