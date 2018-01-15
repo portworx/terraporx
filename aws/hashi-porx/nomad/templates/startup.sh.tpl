@@ -147,8 +147,8 @@ fi
 
 if [[ ${portworx_enabled} == 1 ]]; then
    curl -fsL http://get.portworx.com | sh
-   sudo /opt/pwx/bin/px-runc install -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0
-   sudo systemctl daemon-reload
-   sudo systemctl enable portworx
-   sudo systemctl start portworx
+#    sudo /opt/pwx/bin/px-runc install -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable portworx
+#    sudo systemctl start portworx
 fi
