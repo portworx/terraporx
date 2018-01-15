@@ -153,6 +153,7 @@ Successfully set cluster secret key!
 ## Caveats
 
 * Terraform Nomad provider can try to bring up Portworx before Nomad is ready.  (Workaround: rerun "terraform apply")
+* Does not work with Terraform 0.11.   Tested with Terraform 0.10.x
 
 ## ToDo / Next
 * Automate the Vault login and secret setting for Portworx
