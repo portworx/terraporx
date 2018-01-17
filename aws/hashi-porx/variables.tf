@@ -15,7 +15,7 @@ and resources will be scoped under this namespace.
 It is best if you add this to your .tfvars file so you do not need to type
 it manually with each run
 EOH
-  default = "jeffpx"
+  default = "jss"
 }
 
 variable "vpc_cidr_block" {
@@ -76,6 +76,7 @@ variable "key_path" {
 }
 
 variable "aws_region" {
+   # there seems to be a problem with the vault ami if using us-east-1  
    default = "us-east-2"
 }
 

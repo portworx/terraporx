@@ -15,5 +15,5 @@ resource "null_resource" "px_pause" {
 
 # Register a job
 resource "nomad_job" "portwx" {
-  jobspec = "${file("${path.module}/portworx.nomad")}"
+  jobspec = "${file("${path.module}/px.nomad")}"
 }
