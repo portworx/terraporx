@@ -77,7 +77,7 @@ EOF
   KillSignal=INT
   ExecStart=/usr/local/bin/nomad agent -config="/etc/nomad.d"
   Restart=always
-  ExecStopPost=sleep 5
+  ExecStopPost=/bin/sleep 5
 EOF
 }
 
@@ -101,7 +101,7 @@ function installHashiUI() {
   RestartSec=5
   Environment=CONSUL_ENABLE=true
   Environment=NOMAD_ENABLE=true
-  ExecStopPost=sleep 10
+  ExecStopPost=/bin/sleep 10
 EOF
 }
 
