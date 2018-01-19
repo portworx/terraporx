@@ -15,8 +15,10 @@ job "portworx" {
       value     = "true"
     }
     restart {
-      attempts = 0
-      mode = "fail"
+       interval = "4m"
+       attempts = 1
+       delay    = "3m"
+       mode     = "delay"
     }
     task "px-task" {
        resources {
@@ -31,7 +33,7 @@ job "portworx" {
       driver = "raw_exec"
       config {
         command = "/bin/sh"
-        args = [ "-c", "curl http://get.portworx.com | sh && /opt/pwx/bin/px-runc run -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0" ]
+        args = [ "-c", "curl http://get.portworx.com | sh ; /opt/pwx/bin/px-runc run -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0" ]
         #
         # All the Portworx command line args
         # are documented here: https://docs.portworx.com/install/docker.html#run-px

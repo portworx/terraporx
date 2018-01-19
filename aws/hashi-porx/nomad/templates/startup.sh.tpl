@@ -46,7 +46,7 @@ EOF
   #  ExecStart=/usr/local/bin/consul agent -config-dir="/etc/consul.d"
   ExecStart=/usr/local/bin/consul agent -ui -config-dir="/etc/consul.d" 
   Restart=always
-  ExecStopPost=sleep 5
+  ExecStopPost=/bin/sleep 5
 EOF
 }
 
