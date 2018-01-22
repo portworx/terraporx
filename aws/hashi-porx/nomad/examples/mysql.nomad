@@ -15,6 +15,10 @@ job "mysql-server" {
     task "mysql-server" {
       driver = "docker"
 
+      env = {
+          "MYSQL_ROOT_PASSWORD" = "secret"
+      }
+      
       config {
         image = "mysql/mysql-server:8.0"
 
