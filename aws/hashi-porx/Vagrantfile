@@ -1,0 +1,83 @@
+# -*- mode: ruby -*-
+
+# vi: set ft=ruby :
+
+MEM=2048
+CPU=2
+DISK_SIZE = 10*1024
+HDD = "sdb"
+
+boxes = [
+    {
+        :name => "srv1",
+        :eth1 => "192.168.205.10"
+    },
+    {
+        :name => "srv2",
+        :eth1 => "192.168.205.11"
+    },
+    {
+        :name => "srv3",
+        :eth1 => "192.168.205.12"
+    }
+]
+
+
+$script = <<SCRIPT
+
+sudo apt-get -y install wget unzip
+
+if ! docker --version
+then
+   echo "Installing Docker..."
+   curl -fsL http://get.docker.com | sh
+   sudo systemctl daemon-reload
+   sudo systemctl enable docker
+   sudo systemctl start docker
+else
+   echo "Docker already installed"
+fi
+
+SCRIPT
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "ubuntu/xenial64"
+
+  join_string = ""
+  boxes.each do |b|
+      join_string = "#{join_string}" + " " + b[:eth1]
+  end
+  puts "Static IP Addrs are : #{join_string}"
+
+
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
+      config.vm.hostname = opts[:name]
+      vdisk_name = ".vagrant/#{opts[:name]}_#{HDD}.vdi"
+      config.vm.provider "virtualbox" do |v|
+        v.customize ["modifyvm", :id, "--memory", MEM ]
+        v.customize ["modifyvm", :id, "--cpus", CPU ]
+        unless File.exist?(vdisk_name)
+           v.customize ['createhd', '--filename', vdisk_name, '--size', DISK_SIZE ]
+           v.customize ['storageattach', :id, '--storagectl', "SCSI", '--port', 2, '--device', 0, '--type', 'hdd', '--medium', vdisk_name]
+        end
+      end
+ 
+      config.vm.provision "file", source: "templates/consul.sh", destination: "/tmp/consul.sh" 
+      config.vm.provision "shell", inline: "chmod 755 /tmp/consul.sh"
+      config.vm.provision "file", source: "templates/nomad.sh", destination: "/tmp/nomad.sh" 
+      config.vm.provision "shell", inline: "chmod 755 /tmp/nomad.sh"
+
+      config.vm.provision "shell" , inline: $script
+      config.vm.provision "shell" do |c|
+           c.inline = "/usr/bin/sudo /tmp/consul.sh #{opts[:eth1]} #{join_string}"
+      end
+      config.vm.provision "shell" do |d|
+           d.inline = "/usr/bin/sudo /tmp/nomad.sh #{opts[:eth1]} #{join_string}"
+      end
+      config.vm.network :private_network, ip: opts[:eth1]
+      
+    end
+  end
+end
