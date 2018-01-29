@@ -5,3 +5,5 @@
 .terraform
 tags
 nomad/.instance.tf.swp
+tmp
+.vagrant
