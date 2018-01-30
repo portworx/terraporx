@@ -14,6 +14,12 @@ fi
 mkdir -p /etc/nomad.d /mnt/nomad
 chmod a+w /etc/nomad.d /mnt/nomad
 
+srv_str=""
+for i in ${*:2:$#}
+do
+   srv_str="$srv_str \"$i:4647\" , "
+done
+
 retry_str=""
 for i in ${*:2:$#}
 do
@@ -27,38 +33,21 @@ data_dir   = "/mnt/nomad"
 
 bind_addr = "$1"
 
-
-addresses {
-  # Defaults to the node's hostname. If the hostname resolves to a loopback
-  # address you must manually configure advertise addresses.
-  http = "$1"
-  rpc  = "$1"
-  serf = "$1" # non-default ports may be specified
-}
-
-advertise {
-  # Defaults to the node's hostname. If the hostname resolves to a loopback
-  # address you must manually configure advertise addresses.
-  http = "${1}:4646"
-  rpc  = "${1}:4647"
-  serf = "${1}:4648" # non-default ports may be specified
-}
-
 client {
   enabled = true
+  servers = [ $srv_str ]
   options {
     "driver.raw_exec.enable" = "1"
     "docker.privileged.enabled" = "true"
   }
 }
 
+leave_on_terminate = true
+
 server {
     enabled = true
     retry_join = [ $retry_str ] 
     bootstrap_expect = 3
-}
-consul {
-  address = "$1"
 }
 
 telemetry {
@@ -76,7 +65,7 @@ Description = "Nomad"
 [Service]
 # Stop consul will not mark node as failed but left
 KillSignal=INT
-ExecStart=/usr/bin/nomad agent -dev -config="/etc/nomad.d/config.hcl"
+ExecStart=/usr/bin/nomad agent -config="/etc/nomad.d/config.hcl"
 Restart=always
 ExecStopPost=/bin/sleep 5
 EOF
@@ -84,4 +73,4 @@ EOF
 
 systemctl daemon-reload
 systemctl enable nomad
-systemctl start nomad
+systemctl restart nomad
