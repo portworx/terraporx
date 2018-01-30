@@ -1,7 +1,7 @@
 #!/bin/bash
 
-cd /vagrant/tmp
-if ! nomad --version
+cd /tmp
+if ! nomad --version > /dev/null 2>&1
 then
    NOMAD_VERSION=0.7.1
    echo "Fetching Nomad..."

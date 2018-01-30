@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-cd /vagrant/tmp
-if ! consul --version 
+cd /tmp
+if ! consul --version > /dev/null 2>&1
 then
    CONSUL_VERSION=1.0.2
    echo "Fetching Consul..."
