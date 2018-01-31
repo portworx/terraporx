@@ -20,7 +20,7 @@ description="Hashi UI"
 
 [Service]
 KillSignal=INT
-ExecStart=/usr/bin/hashi-ui --consul-enable --nomad-enable -nomad-address http://${1}:4646
+ExecStart=/usr/bin/hashi-ui -nomad-address http://${1}:4646
 Restart=always
 RestartSec=5
 Environment=CONSUL_ENABLE=true
