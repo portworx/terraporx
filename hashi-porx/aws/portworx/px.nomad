@@ -25,9 +25,10 @@ job "portworx" {
           cpu    = 500 # MHz
           memory = 2048 # MB
           network {
-          port "status" {
-            static = "9001"
-         }
+            mbits = 200
+            port "status" {
+               static = "9001"
+            }
         }
        }
       driver = "raw_exec"
