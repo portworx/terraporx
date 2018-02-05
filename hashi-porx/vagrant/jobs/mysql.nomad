@@ -20,7 +20,7 @@ job "mysql-server" {
       }
       
       config {
-        image = "mysql/mysql-server:8.0"
+        image = "mysql:8.0"
 
         port_map {
           db = 3306
@@ -28,14 +28,14 @@ job "mysql-server" {
 
 
         volumes = [
-          "name=mysql,size=10,repl=3/:/docker-entrypoint-initdb.d/",
+          "name=mysql,size=10,repl=3:/var/lib/mysql"
         ]
         volume_driver = "pxd"
       }
 
       resources {
-        cpu    = 500
-        memory = 1024
+        cpu    = 250
+        memory = 512
         network {
           port "db" {}
         }
