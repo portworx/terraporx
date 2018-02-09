@@ -5,13 +5,6 @@ job "mysql-server" {
   group "mysql-server" {
     count = 1
 
-    restart {
-      attempts = 10
-      interval = "5m"
-      delay    = "25s"
-      mode     = "delay"
-    }
-
     task "mysql-server" {
       driver = "docker"
 
