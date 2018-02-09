@@ -23,7 +23,7 @@ job "portworx" {
     task "px-task" {
        resources {
           cpu    = 500 # MHz
-          memory = 1024 # MB
+          memory = 1512 # MB
           network {
           port "status" {
             static = "9001"

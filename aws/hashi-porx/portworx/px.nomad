@@ -3,7 +3,7 @@ job "portworx" {
   type = "system"
   update {
     stagger      = "30s"
-    max_parallel = 3
+    max_parallel = 2
   }
   group "px-group" {
     # The "count" parameter specifies the number of the task groups that should
@@ -33,7 +33,8 @@ job "portworx" {
       driver = "raw_exec"
       config {
         command = "/bin/sh"
-        args = [ "-c", "curl http://get.portworx.com | sh ; /opt/pwx/bin/px-runc run -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0" ]
+        args = [ "-c", "sudo docker run --entrypoint /runc-entry-point.sh  --rm -i --privileged=true -v /opt/pwx:/opt/pwx -v /etc/pwx:/etc/pwx  portworx/px-enterprise:1.2.12.1 --upgrade ; /opt/pwx/bin/runc delete -f portworx; /opt/pwx/bin/px-runc run -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0" ]
+        # args = [ "-c", "curl http://get.portworx.com | sh ; /opt/pwx/bin/px-runc run -k consul:http://127.0.0.1:8500 -c pxcluster -f -a -d eth0 -m eth0" ]
         #
         # All the Portworx command line args
         # are documented here: https://docs.portworx.com/install/docker.html#run-px

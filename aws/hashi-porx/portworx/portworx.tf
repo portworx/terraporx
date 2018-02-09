@@ -15,8 +15,8 @@ while true
 do 
     if curl http://${var.nomad_alb}:4646/v1/status/leader > /dev/null 2>&1 && ! curl http://${var.nomad_alb}:4646/v1/status/leader 2>/dev/null | egrep 'No cluster leader|Bad Gateway' && curl http://${var.nomad_alb}:4646/v1/jobs
     then
+       /bin/sleep 120
        echo Nomad is Ready
-       /bin/sleep 15
        break
     else
        echo Waiting for Nomad ...
