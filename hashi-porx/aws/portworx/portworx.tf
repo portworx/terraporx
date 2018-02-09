@@ -9,7 +9,7 @@ provider "nomad" {
 resource "null_resource" "wait4_nomad" {
    #  Need time to settle before submitting
    provisioner "local-exec" {
-        interpreter = [ "bash", "-c" ]
+        # interpreter = [ "bash", "-c" ]
         command = <<EOF
 while true
 do 

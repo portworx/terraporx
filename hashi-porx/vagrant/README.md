@@ -11,6 +11,9 @@ This environment has been tested on 16GB server.
 When finished, the Hashi-UI will be available on the host machine at 
 `http://host-ip:3000`
 
+Please see the `jobs` directory for depoloying Portworx as well as 
+examples for consuming Portworx storage.
+
 ## ToDo
 Add vault
 
