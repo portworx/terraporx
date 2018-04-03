@@ -7,6 +7,9 @@ CPU=2
 DISK_SIZE = 15*1024
 HDD = "sdc"
 
+require 'securerandom'
+clusterID = SecureRandom.uuid
+
 boxes = [
     { :name => "srv1", :eth1 => "192.168.205.10" },
     { :name => "srv2", :eth1 => "192.168.205.11" },
@@ -66,6 +69,7 @@ Vagrant.configure(2) do |config|
       config.vm.provision "shell" , inline: "/usr/bin/sudo /tmp/consul.sh #{opts[:eth1]} #{join_string}"
       config.vm.provision "shell" , inline: "/usr/bin/sudo /tmp/nomad.sh #{opts[:eth1]} #{join_string}"
       config.vm.provision "shell" , inline: "/usr/bin/sudo echo export NOMAD_ADDR=http://#{opts[:eth1]}:4646 >> .bash_profile"
+      config.vm.provision "shell", inline: "curl -fsL http://get.portworx.com:8080 | sh -s -- -c #{clusterID} -k 'consul:http://127.0.0.1:8500' -a -f -m enp0s8 -d enp0s8"
       config.vm.network :private_network, ip: opts[:eth1]
       if idx == boxes.size - 1
            config.vm.provision "file", source: "templates/hashiui.sh", destination: "/tmp/hashiui.sh" 
