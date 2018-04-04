@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
                sudo sh /tmp/docker.sh
                sudo systemctl start docker
                sudo curl -fsSL https://get.portworx.com > /tmp/px.sh
-               sudo sh /tmp/px.sh -m eth1 -d eth1 -c #{clusterID}
+               sudo sh /tmp/px.sh -a -f -m eth1 -d eth1 -c #{clusterID}
              SHELL
          end
       end
