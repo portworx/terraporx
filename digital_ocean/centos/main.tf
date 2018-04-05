@@ -2,6 +2,9 @@ provider "digitalocean" {
   token = "${var.do_token}"
 }
 
+variable d_eth_if { default = "eth1" }
+variable m_eth_if { default = "eth1" }
+
 resource "digitalocean_volume" "px-vol" {
   region      = "${var.region}"
   count       = "${var.do_count}"
@@ -42,30 +45,16 @@ resource "digitalocean_droplet" "centos" {
      }
 }
 
-#
-# Run etcd only on the first server
-#
-resource "null_resource" "run-etcd" {
-  depends_on = ["digitalocean_droplet.centos"]
-  connection {
-    user = "root"
-    private_key = "${file("${var.ssh_key_path}")}"
-    host = "${digitalocean_droplet.centos.0.ipv4_address}"
-    agent = false
-  }
 
-  provisioner "remote-exec" {
-      inline = [
-        "docker run --net=host -d --name etcd-v3.1.3 --volume=/tmp/etcd-data:/etcd-data quay.io/coreos/etcd:v3.1.3 /usr/local/bin/etcd --name my-etcd-1 --data-dir /etcd-data --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://${digitalocean_droplet.centos.0.ipv4_address_private}:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://${digitalocean_droplet.centos.0.ipv4_address_private}:2380 --initial-cluster my-etcd-1=http://${digitalocean_droplet.centos.0.ipv4_address_private}:2380 --initial-cluster-token my-etcd-token --initial-cluster-state new --auto-compaction-retention 1"
-       ]
-  }
+locals {
+      clusterid = "${uuid()}"
 }
 
 #
 # Run PX on all servers
 #
 resource "null_resource" "run-px" {
-  depends_on = ["null_resource.run-etcd"]
+
   count = "${var.do_count}"
   connection {
     user = "root"
@@ -74,7 +63,7 @@ resource "null_resource" "run-px" {
     agent = false
   }
    provisioner "remote-exec" {
-     inline = [ "docker run --restart=always --name px -d --net=host --privileged=true -v /run/docker/plugins:/run/docker/plugins -v /var/lib/osd:/var/lib/osd:shared -v /dev:/dev -v /etc/pwx:/etc/pwx -v /opt/pwx/bin:/export_bin:shared -v /var/run/docker.sock:/var/run/docker.sock -v /var/cores:/var/cores -v /usr/src:/usr/src --ipc=host portworx/px-dev -daemon -k etcd://${digitalocean_droplet.centos.0.ipv4_address_private}:2379 -c MY_CLUSTER_ID -a -f -z -d eth1 -m eth1" ]
+     inline = [ "curl -fsSL https://get.portworx.com | sh -s -- -a -f -z -c ${local.clusterid} -d ${var.d_eth_if} -m ${var.m_eth_if}" ]
    }
 }
 
