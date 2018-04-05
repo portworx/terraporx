@@ -40,7 +40,7 @@ variable "pub_key" {
 
 variable "ssh_fingerprint" {
   description = "fingerprint"
-  default = "74:aa:a7:6e:2a:78:fb:27:d5:01:5e:94:1a:d3:38:fd"
+  default = ""
 }
 
 
