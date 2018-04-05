@@ -1,6 +1,6 @@
 variable "do_token" {
   description = "API Token"
-  default = "da65e0e74daadecea64039cf012c87ceec4c4dc1841c6addfdc7b9e7854f2193"
+  default = ""
 }
 
 variable "do_count" {
