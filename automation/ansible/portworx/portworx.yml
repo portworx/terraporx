@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Set Unique ClusterID Once
+    command : "uuidgen"
+    register: clusterID
+- hosts: all
+  remote_user: root
+  vars:
+       # For full list of command line arguments, please see:
+       # https://docs.portworx.com/runc/options.html
+       kvdb : ""
+       data_if : "eth1"
+       mgmt_if : "eth1"
+       CID : "{{ hostvars['localhost']['clusterID'].stdout }}"
+  tasks:
+  - debug: msg="Cluster ID = {{ CID }}"
+  - name: Install Portworx
+    shell: |
+       curl -fsSL https://get.portworx.com | sh -s -- -c {{ CID }} -d {{ data_if }} -m {{ mgmt_if }}
