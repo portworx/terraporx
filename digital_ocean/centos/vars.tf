@@ -1,6 +1,6 @@
 variable "do_token" {
   description = "API Token"
-  default = "da65e0e74daadecea64039cf012c87ceec4c4dc1841c6addfdc7b9e7854f2193"
+  default = ""
 }
 
 variable "do_count" {
@@ -15,7 +15,7 @@ variable "region" {
 
 variable "size" {
    description = "Instance size: [ 2gb, 4gb, 8gb, 16gb, 32gb, 48gb, 64gb ]"
-   default = "4gb"
+   default = ""
 }
 
 variable "volsize" {
@@ -40,7 +40,7 @@ variable "pub_key" {
 
 variable "ssh_fingerprint" {
   description = "fingerprint"
-  default = "74:aa:a7:6e:2a:78:fb:27:d5:01:5e:94:1a:d3:38:fd"
+  default = ""
 }
 
 
