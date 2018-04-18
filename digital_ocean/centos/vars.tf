@@ -30,12 +30,12 @@ variable "prefix" {
 
 variable "ssh_key_path" {
   description = "private key path"
-  default = "./jeff.key"
+  default = "~/.ssh/id_rsa"
 }
 
 variable "pub_key" {
   description = "ssh_key"
-  default = ""
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "ssh_fingerprint" {
