@@ -3,8 +3,8 @@
 ## On Destroy
 Before destroying, you **must** manually run the following steps:
 
-* Stop Portworx
-* Run "bash packet-block-storage/packet-block-attach"
+* ``systemctl stop portworx``
+* ``packet-block-storage-detach``
 
 Afterwards, "terraform destroy" can hopefully be successfully run.
 
