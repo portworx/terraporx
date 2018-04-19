@@ -10,7 +10,7 @@ locals {
 }
 
 module "portworx" {
-   source = "github.com/portworx/terraform-portworx-instance"
+   source = "github.com/portworx/terraform-portworx-portworx-instance"
    clusterID = "${local.clusterid}"
    kvdb =  "etcd:http://127.0.0.1:2379" 
    data_if = "${var.d_eth_if}"
