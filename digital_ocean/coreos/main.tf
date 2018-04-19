@@ -4,6 +4,7 @@ provider "digitalocean" {
 
 variable d_eth_if { default = "eth1" }
 variable m_eth_if { default = "eth1" }
+# variable clusterID { default = "zxxxd1f-ad24" }
 
 locals {
       clusterid = "${uuid()}"
@@ -11,8 +12,7 @@ locals {
 
 module "portworx" {
    source = "github.com/portworx/terraform-portworx-portworx-instance"
-   clusterID = "${local.clusterid}"
-   kvdb =  "etcd:http://127.0.0.1:2379" 
+   clusterID = "${var.clusterID != "" ? var.clusterID : local.clusterid}"
    data_if = "${var.d_eth_if}"
    mgmt_if = "${var.m_eth_if}"
    device_args = "-s /dev/sda"
