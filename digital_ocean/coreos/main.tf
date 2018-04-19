@@ -2,6 +2,31 @@ provider "digitalocean" {
   token = "${var.do_token}"
 }
 
+variable d_eth_if { default = "eth1" }
+variable m_eth_if { default = "eth1" }
+
+locals {
+      clusterid = "${uuid()}"
+}
+
+module "portworx" {
+   source = "github.com/portworx/terraform-portworx-instance"
+   clusterID = "${local.clusterid}"
+   kvdb =  "etcd:http://127.0.0.1:2379" 
+   data_if = "${var.d_eth_if}"
+   mgmt_if = "${var.m_eth_if}"
+   device_args = "-s /dev/sda"
+   # force_use = "true"
+   # zero_storage = "true"
+   # journal_dev { default = "" }
+   # scheduler { default = ""}
+   # token { default = "" }
+   # zero_storage { default = "" }
+   # env_list { default = "" }
+   # secret_type { default = "" }
+   # cluster_secret_key" { default = "" }
+}
+
 resource "digitalocean_volume" "px-vol" {
   region      = "${var.region}"
   count       = "${var.do_count}"
@@ -36,42 +61,20 @@ coreos:
    units:
        - name: etcd2.service
          command: start
-       - name: portworx.service
-         command: start
-         content: |
-            [Unit]
-            Description=Portworx Container
-            Wants=docker.service
-            After=docker.service
-            [Service]
-            Restart=always
-            TimeoutSec=0
-            ExecStartPre=-/usr/bin/docker stop %n
-            ExecStartPre=-/usr/bin/docker rm -f %n
-            ExecStart=/usr/bin/docker run --net=host --privileged=true \
-                   --cgroup-parent=/system.slice/portworx.service      \
-                   -v /run/docker/plugins:/run/docker/plugins          \
-                   -v /var/lib/osd:/var/lib/osd:shared                 \
-                   -v /dev:/dev                                        \
-                   -v /etc/pwx:/etc/pwx                                \
-                   -v /opt/pwx/bin:/export_bin:shared                  \
-                   -v /var/run/docker.sock:/var/run/docker.sock        \
-                   -v /var/cores:/var/cores                            \
-                   -v /lib/modules:/lib/modules                        \
-                   --ipc=host                                          \
-                   --name=%n                                           \
-                   portworx/px-dev -s /dev/sda -d eth1 -m eth1 -k etcd://127.0.0.1:2379 -c px-cluster-coreos
-            KillMode=control-group
-            ExecStop=/usr/bin/docker stop -t 10 %n
-            [Install]
-            WantedBy=multi-user.target
 EOF
     connection {
       agent = false
-      user = "root"
+      user = "core"
       type = "ssh"
       private_key = "${file("${var.ssh_key_path}")}"
       timeout = "1m"
     }
+    provisioner "remote-exec" {
+       inline = [
+         "sudo systemctl enable etcd-member.service",
+         "sudo systemctl start etcd-member.service",
+         "sudo ${module.portworx.get_px_cmd}"
 
+       ]
+   }
 }
