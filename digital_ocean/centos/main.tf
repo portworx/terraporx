@@ -5,6 +5,28 @@ provider "digitalocean" {
 variable d_eth_if { default = "eth1" }
 variable m_eth_if { default = "eth1" }
 
+locals {
+      clusterid = "${uuid()}"
+}
+
+module "portworx" {
+   source = "github.com/portworx/terraform-portworx-portworx-instance"
+   clusterID = "${local.clusterid}"
+   data_if = "${var.d_eth_if}"
+   mgmt_if = "${var.m_eth_if}"
+   device_args = "-s /dev/sda"
+   # force_use = "true"
+   # zero_storage = "true"
+   # kvdb   { default = "" }
+   # journal_dev { default = "" }
+   # scheduler { default = ""}
+   # token { default = "" }
+   # zero_storage { default = "" }
+   # env_list { default = "" }
+   # secret_type { default = "" }
+   # cluster_secret_key" { default = "" }
+}
+  
 resource "digitalocean_volume" "px-vol" {
   region      = "${var.region}"
   count       = "${var.do_count}"
@@ -35,35 +57,11 @@ resource "digitalocean_droplet" "centos" {
 
      provisioner "remote-exec" {
        inline = [
-         "yum install -y yum-utils",
-         "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo",
-         "yum makecache fast",
-         "yum -y install docker-ce",
+         "curl -fsSL https://get.docker.com | sh",
          "systemctl enable docker",
-         "systemctl start docker"
+         "systemctl start docker",
+         "${module.portworx.get_px_cmd}"
        ]
      }
-}
-
-
-locals {
-      clusterid = "${uuid()}"
-}
-
-#
-# Run PX on all servers
-#
-resource "null_resource" "run-px" {
-
-  count = "${var.do_count}"
-  connection {
-    user = "root"
-    private_key = "${file("${var.ssh_key_path}")}"
-    host = "${element(digitalocean_droplet.centos.*.ipv4_address, count.index)}"
-    agent = false
-  }
-   provisioner "remote-exec" {
-     inline = [ "curl -fsSL https://get.portworx.com | sh -s -- -a -f -z -c ${local.clusterid} -d ${var.d_eth_if} -m ${var.m_eth_if}" ]
-   }
 }
 
