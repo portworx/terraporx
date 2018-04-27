@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Set Unique ClusterID Once
+    command : "uuidgen"
+    register: clusterID
+- hosts: all
+  roles:
+    - role: portworx
