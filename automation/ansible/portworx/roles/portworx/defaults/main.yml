@@ -1,8 +1,8 @@
 # defaults file for portworx.role
 kvdb: ""
-cluster_id: "my-portworx-cluster"
-data_if : "eth1"
-mgmt_if : "eth1"
+cluster_id: "-c my-portworx-cluster"
+data_if : "-d eth1"
+mgmt_if : "-m eth1"
 device_args: ""
 storageless: ""
 force: ""

@@ -14,9 +14,9 @@ or for other environments where Portworx is to be deployed directly.
 The sample variables provided are:
 ```
        kvdb : ""
-       data_if : "eth1"
-       mgmt_if : "eth1"
-       cluster_id : "{{ hostvars['localhost']['clusterID'].stdout }}"
+       data_if : "-d eth1"
+       mgmt_if : "-m eth1"
+       cluster_id : "-c {{ hostvars['localhost']['clusterID'].stdout }}"
 ```
 
 For a complete list of command line arguments, please see [https://docs.portworx.com/runc/options.html](https://docs.portworx.com/runc/options.html)
