@@ -15,7 +15,7 @@ variable "region" {
 
 variable "size" {
    description = "Instance size: [ 2gb, 4gb, 8gb, 16gb, 32gb, 48gb, 64gb ]"
-   default = ""
+   default = "4gb"
 }
 
 variable "volsize" {

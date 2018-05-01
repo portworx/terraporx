@@ -32,13 +32,15 @@ module "portworx" {
    # cluster_secret_key" { default = "" }
 }
 
-resource "ibm_compute_vm_instance" "my-vm" {
-  hostname          = "jeff1"
+resource "ibm_compute_vm_instance" "k8s_agent" {
+  count             = "${var.ibm_k8s_agent_count}"
+  hostname          = "${var.basename}-${count.index + 1}"
   domain            = "example.com"
   ssh_key_ids = ["${data.ibm_compute_ssh_key.public_key.id}"]
   os_reference_code = "CENTOS_7_64"
   datacenter        = "dal13"
   hourly_billing = true
+  # disk sizes : 10, 20, 25, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 750, 1000, 1500, 2000
   disks = [ 25, 25 ]
   local_disk = true
   network_speed     = 10
@@ -58,7 +60,44 @@ resource "ibm_compute_vm_instance" "my-vm" {
          "curl -fsSL https://get.docker.com | sh",
          "systemctl enable docker",
          "systemctl start docker",
-         "${module.portworx.get_px_cmd}"
+         # "${module.portworx.get_px_cmd}"
        ]
   }
 }
+
+
+resource "ibm_compute_vm_instance" "k8s_master" {
+  count             = "${var.ibm_k8s_master_count}"
+  hostname          = "${var.basename}-master-${count.index + 1}"
+  domain            = "example.com"
+  ssh_key_ids = ["${data.ibm_compute_ssh_key.public_key.id}"]
+  os_reference_code = "CENTOS_7_64"
+  datacenter        = "dal13"
+  hourly_billing = true
+  # disk sizes : 10, 20, 25, 30, 40, 50, 75, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 750, 1000, 1500, 2000
+  # disks = [ 25, 25 ]
+  local_disk = true
+  network_speed     = 10
+  cores             = 1
+  memory            = 1024
+
+  connection {
+      agent = false
+      user = "root"
+      type = "ssh"
+      private_key = "${file("${var.ssh_key_path}")}"
+      timeout = "1m"
+  }
+
+  provisioner "remote-exec" {
+       inline = [
+   #      "curl -fsSL https://get.docker.com | sh",
+   #      "systemctl enable docker",
+   #      "systemctl start docker",
+   #      "${module.portworx.get_px_cmd}"
+       ]
+  }
+}
+
+
+
