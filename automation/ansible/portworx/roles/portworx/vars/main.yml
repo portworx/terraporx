@@ -1,0 +1,8 @@
+---
+# vars file for portworx.role
+# For full list of command line arguments, please see:
+# https://docs.portworx.com/runc/options.html
+kvdb : ""
+data_if : "-d eth1"
+mgmt_if : "-m eth1"
+cluster_id : " -c {{ hostvars['localhost']['clusterID'].stdout }}"

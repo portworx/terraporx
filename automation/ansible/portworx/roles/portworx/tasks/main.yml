@@ -1,0 +1,7 @@
+# tasks file for portworx.role
+---
+- debug: msg="Command =  curl -fsSL https://get.portworx.com | sh -s -- {{ kvdb }} {{ cluster_id }} {{ data_if }} {{ mgmt_if }} {{ device_args }} {{ storageless }} {{ force }} {{ journal_dev }} {{ scheduler }} {{ environment }}"
+- debug: msg="Command output does not display.  Command takes ~3-5 minutes to complete.  Please be patient ..."
+- name: Install Portworx
+  shell: |
+     curl -fsSL https://get.portworx.com | sh -s -- {{ kvdb }} {{ cluster_id }} {{ data_if }} {{ mgmt_if }} {{ device_args }} {{ storageless }} {{ force }} {{ journal_dev }} {{ scheduler }} {{ environment }}
