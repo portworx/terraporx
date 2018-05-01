@@ -3,7 +3,7 @@
 cd /tmp
 if ! nomad --version > /dev/null 2>&1
 then
-   NOMAD_VERSION=0.7.1
+   NOMAD_VERSION=0.8.3
    echo "Fetching Nomad..."
    curl -sSL https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip
    echo "Installing Nomad ..."

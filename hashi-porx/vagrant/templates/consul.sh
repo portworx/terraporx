@@ -3,7 +3,7 @@
 cd /tmp
 if ! consul --version > /dev/null 2>&1
 then
-   CONSUL_VERSION=1.0.2
+   CONSUL_VERSION=1.0.7
    echo "Fetching Consul..."
    curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip > consul.zip
    echo "Installing Consul..."
