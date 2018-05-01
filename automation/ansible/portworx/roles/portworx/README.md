@@ -9,6 +9,22 @@ This `ansible` script is intended to help install Portworx
 for [HashiCorp Nomad](https://www.nomadproject.io/)
 or for other environments where Portworx is to be deployed directly.
 
+## Sample Playbook
+
+Here is a sample playbook, that uses the `portworx` role
+to create a custom ClusterID and install Portworx on all nodes:
+```
+---
+- hosts: localhost
+  tasks:
+  - name: Set Unique ClusterID Once
+    command : "uuidgen"
+    register: clusterID
+- hosts: all
+  roles:
+    - role: portworx
+```
+
 ## Variables and Arguments
 
 The sample variables provided are:
