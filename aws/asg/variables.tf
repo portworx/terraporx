@@ -1,17 +1,20 @@
 variable "namespace" { 
+  default = "jeff"
 }
 
 variable "volsize" {
    description = "Extra EBS volsize"
+   default = 100
 }
 
 variable "instances" {
   description = "The number of servers."
+  default = 1
 }
 
 # AWS Specific variables
 variable "instance_type" {
-  default = "t2.medium"
+  default = "t2.small"
 }
 
 variable "pub_key" {
@@ -20,6 +23,7 @@ variable "pub_key" {
 
 variable "key_name" {
   description = "The id of the ssh key to add to the servers"
+  default = "jeff"
 }
 
 variable "vpc_cidr_block" {
