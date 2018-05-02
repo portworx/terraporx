@@ -1,0 +1,24 @@
+sudo: required
+
+language: bash
+
+dist: trusty
+
+services:
+  - docker
+
+cache:
+  directories:
+    - ".terraform"
+
+env:
+  - TRAVIS_SECURE_ENV_VARS=true
+
+before_script:
+  - docker pull hashicorp/terraform:light
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
