@@ -36,10 +36,6 @@ bind_addr = "$1"
 client {
   enabled = true
   servers = [ $srv_str ]
-  options {
-    "driver.raw_exec.enable" = "1"
-    "docker.privileged.enabled" = "true"
-  }
 }
 
 leave_on_terminate = true
@@ -50,10 +46,6 @@ server {
     bootstrap_expect = 3
 }
 
-telemetry {
-  publish_allocation_metrics = true
-  publish_node_metrics       = true
-}
 EOF
 ) | tee /etc/nomad.d/config.hcl
 
