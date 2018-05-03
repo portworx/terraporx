@@ -10,18 +10,28 @@ env:
   matrix:
   - TRAVIS_SECURE_ENV_VARS=true
   global:
-    secure: kgOW1dHvpRVb9nSLgeDqr2C2QUWzwSi0c21krwo1yAtC5aBQ94r/Zm1xeVWOZgf/z0GEyMptfz4fAnpEehJ5J6yjPS2G9eirQuWsPzUd25z6xW12zODIkRu6nDjradngCIY3qcWRo4W83YjTAL2gnFzt2iX4p/ZhHUHkc08QGk7r56TnRUC4qN2i3WHnYVGAzrTZCEeNca1KsQmC6dLoqPpaUg71B2xcxZ0PI535BlBcBU+tZDznx6bhirkiFF1x0o1ZWsIbbHnNSDPUO3VCO77RzVFAPxQW91QBssYAMa7UVnMIJZne2sdpns62jJAsCfFDiftsOpoTf5X5EGvWcFvXVZ+esxqA/F/FwGHp59zeubU0Zqq6o3T6tR9fL1ZtcF+MMdgeVO/MdEpAs5iPGRhEqalUH8oSBrvX2BQNJ60A9T89QehhjN2kfZpNy6p6dEgNONjgcgZ6ovnwJmuLW+XXkYeixzsq/BxD0VEu0wk3l3ZgNNfuCGdZ/wBkRXQtkDr83wNp0pAy4k3LIYZg9ZXztZ/aWH2Q8m4+Sj96LzCZ9Nmkbt5WWNwAVjdqj2mtg6GzkSGHfRMG+6Y4ZBQD3bPFPq9rLA3S4aix4W5ORlutqA1AxlzDuY3w/juB3PPy9QI2EJji6LTouM2SeKKLs7ZrMzfckrgUyNGz7rpWGh0=
+  - secure: kgOW1dHvpRVb9nSLgeDqr2C2QUWzwSi0c21krwo1yAtC5aBQ94r/Zm1xeVWOZgf/z0GEyMptfz4fAnpEehJ5J6yjPS2G9eirQuWsPzUd25z6xW12zODIkRu6nDjradngCIY3qcWRo4W83YjTAL2gnFzt2iX4p/ZhHUHkc08QGk7r56TnRUC4qN2i3WHnYVGAzrTZCEeNca1KsQmC6dLoqPpaUg71B2xcxZ0PI535BlBcBU+tZDznx6bhirkiFF1x0o1ZWsIbbHnNSDPUO3VCO77RzVFAPxQW91QBssYAMa7UVnMIJZne2sdpns62jJAsCfFDiftsOpoTf5X5EGvWcFvXVZ+esxqA/F/FwGHp59zeubU0Zqq6o3T6tR9fL1ZtcF+MMdgeVO/MdEpAs5iPGRhEqalUH8oSBrvX2BQNJ60A9T89QehhjN2kfZpNy6p6dEgNONjgcgZ6ovnwJmuLW+XXkYeixzsq/BxD0VEu0wk3l3ZgNNfuCGdZ/wBkRXQtkDr83wNp0pAy4k3LIYZg9ZXztZ/aWH2Q8m4+Sj96LzCZ9Nmkbt5WWNwAVjdqj2mtg6GzkSGHfRMG+6Y4ZBQD3bPFPq9rLA3S4aix4W5ORlutqA1AxlzDuY3w/juB3PPy9QI2EJji6LTouM2SeKKLs7ZrMzfckrgUyNGz7rpWGh0=
+  - secure: GzjFDhM7Pt3lP5y64/slvmIXLzl+gkhQNzFxmjxYinCcBT0hQnvqDCnbajqDxsO1RR5RbIlSyHbvrE5ibfOJLDhcXgkDuiDi0ln3tMJh+d5BDGQqIxAExmNoOjOhIjvfcGbaXqQq4OArUJatWxvpcjWRGdKNyFyDSj1T3OVQNxuZv8BfcyU0PQSg6nw4OpLwM4YQS/WivPDIFpkWu8/s4bfq2sJch0oW4Uv8PbdEKZg4HiRGNCrzRqUUBUJ67FML4UeibiD6buglkmM4r7vwPv8xzN3NRTk9/T8Bqq8b4oBuEreLNs2elysB5z4PCknvV+mXM5M1J6cmTwU8Pj/lZhpTZ5YeVj3MhFGTJyfkCsszLYIqjPfJRWt3AiUlizEkY2iJrk0ltTMHr8fDvxq6g/Pe6rwUZeT9tUW31U2/282IPfi3uPNu6QEad9VJKzepDI8GsQdQ3Kd0PmuEsFFJOpDJyw2d31358ZuByBDVc1an0kMhE/VM4fb3NzZF72fUgfycPhRW68TrbpeT+40cBIF6OEqTk6xaGEtdgGNE6RqYKJhhQregm7a6EufljoRgrasS1r/j362A2YHZxhcCbtMFzZD/L5m7s9apbEbUukpbnZE93DXEVMu1/BFcEN79iXy5bcDu9xcUvfOXLcAECOJxshoL/XzNjLKeK8qV1Jg=
 before_script:
 - mkdir -p /home/travis/.ssh/
 - ssh-keygen -t rsa -f /home/travis/.ssh/id_rsa -N ''
-- ls -ltra /home/travis/.ssh
-- FPRINT=`ssh-keygen -E md5 -lf id_rsa.pub |awk '{print $2}' | sed -e 's/MD5://'`
 - docker pull hashicorp/terraform:light
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=$FPRINT" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light init
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=$FPRINT"  -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light validate
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=$FPRINT" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light plan
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=$FPRINT" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light apply -auto-approve
-
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa"
+  -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=${FPRINT}"
+  -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light
+  init
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa"
+  -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=${FPRINT}"  -v
+  $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light
+  validate
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa"
+  -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=${FPRINT}"
+  -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light
+  plan
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa"
+  -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -e "TF_VAR_ssh_fingerprint=${FPRINT}"
+  -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light
+  apply -auto-approve
 notifications:
   email:
     on_success: never
