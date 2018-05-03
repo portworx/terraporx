@@ -16,10 +16,10 @@ before_script:
 - ssh-keygen -t rsa -f /home/travis/.ssh/id_rsa -N ''
 - ls -ltra /home/travis/.ssh
 - docker pull hashicorp/terraform:light
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light init
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light validate
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light plan
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light apply -auto-approve
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light init
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light validate
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light plan
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v /home/travis/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light apply -auto-approve
 
 notifications:
   email:
