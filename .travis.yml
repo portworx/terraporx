@@ -13,13 +13,13 @@ env:
     secure: kgOW1dHvpRVb9nSLgeDqr2C2QUWzwSi0c21krwo1yAtC5aBQ94r/Zm1xeVWOZgf/z0GEyMptfz4fAnpEehJ5J6yjPS2G9eirQuWsPzUd25z6xW12zODIkRu6nDjradngCIY3qcWRo4W83YjTAL2gnFzt2iX4p/ZhHUHkc08QGk7r56TnRUC4qN2i3WHnYVGAzrTZCEeNca1KsQmC6dLoqPpaUg71B2xcxZ0PI535BlBcBU+tZDznx6bhirkiFF1x0o1ZWsIbbHnNSDPUO3VCO77RzVFAPxQW91QBssYAMa7UVnMIJZne2sdpns62jJAsCfFDiftsOpoTf5X5EGvWcFvXVZ+esxqA/F/FwGHp59zeubU0Zqq6o3T6tR9fL1ZtcF+MMdgeVO/MdEpAs5iPGRhEqalUH8oSBrvX2BQNJ60A9T89QehhjN2kfZpNy6p6dEgNONjgcgZ6ovnwJmuLW+XXkYeixzsq/BxD0VEu0wk3l3ZgNNfuCGdZ/wBkRXQtkDr83wNp0pAy4k3LIYZg9ZXztZ/aWH2Q8m4+Sj96LzCZ9Nmkbt5WWNwAVjdqj2mtg6GzkSGHfRMG+6Y4ZBQD3bPFPq9rLA3S4aix4W5ORlutqA1AxlzDuY3w/juB3PPy9QI2EJji6LTouM2SeKKLs7ZrMzfckrgUyNGz7rpWGh0=
 before_script:
 - mkdir -p /home/travis/.ssh/
-- ssh-keygen -t rsa -f /home/travis/.ssh/id_rsa -N ''
+- ssh-keygen -t rsa -f $(pwd)/.ssh/id_rsa -N ''
 - ls -ltra /home/travis/.ssh
 - docker pull hashicorp/terraform:light
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/x/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/x/.ssh -w /x/ hashicorp/terraform:light init
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/x/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/x/.ssh -w /x/ hashicorp/terraform:light validate
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/x/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/x/.ssh -w /x/ hashicorp/terraform:light plan
-- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/x/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/x/.ssh -w /x/ hashicorp/terraform:light apply -auto-approve
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light init
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light validate
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light plan
+- docker run -e "TF_VAR_do_token=${DO_API}" -e "TF_VAR_ssh_key_path=/tmp/.ssh/id_rsa" -e "TF_VAR_pub_key=/x/.ssh/id_rsa.pub" -e "TF_VAR_do_count=1" -v $(pwd)/digital_ocean/centos:/x/ -v $(pwd)/.ssh:/tmp/.ssh -w /x/ hashicorp/terraform:light apply -auto-approve
 
 notifications:
   email:
