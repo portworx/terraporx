@@ -27,32 +27,11 @@ Added an EBS volume to the `aws_launch_configuration` in [nomad/instance.tf](./n
   }
 ```
 
-Changed Nomad Client config [nomad-client-hcl.tpl](./nomad/templates/nomad-client.hcl.tpl) to allow launching of Portworx:
-```
-client {
-  enabled = true
-  options {
-    "driver.raw_exec.enable" = "1"
-    "docker.privileged.enabled" = "true"
-  }
-}
-```
-
-Changed the [Nomad load balancer](./nomad/alb.tf) to listen on the external network,
-so that the terraform nomad provider could be used to deploy Portworx.
-
-```
-resource "aws_alb_listener" "nomad" {
-  count = "${var.nomad_type == "server" ? 1 : 0}"
-
-#  load_balancer_arn = "${var.internal_alb_arn}"
-  load_balancer_arn = "${var.external_alb_arn}"
-  [...] 
-```
-
 ### Portworx 
 
-Deploys Portworx as a `system` service through Nomad with the [portworx.nomad](./portworx/portworx.nomad) job file.
+Deploys Portworx outside of Nomad as a `systemd` service.   
+Jobs within Nomad can then consume and use Portworx through the docker volume_driver plugin interface.
+Please see the [mysql example](https://github.com/portworx/terraporx/blob/master/hashi-porx/aws/nomad/examples/mysql.nomad)
 
 ## Launch
 
@@ -151,9 +130,6 @@ Successfully set cluster secret key!
 
 
 ## Caveats
-
-* Terraform Nomad provider can try to bring up Portworx before Nomad is ready.  (Workaround: rerun "terraform apply")
-* Does not work with Terraform 0.11.   Tested with Terraform 0.10.x
 
 ## ToDo / Next
 * Automate the Vault login and secret setting for Portworx
