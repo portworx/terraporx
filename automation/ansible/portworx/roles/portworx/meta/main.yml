@@ -1,9 +1,0 @@
-galaxy_info:
-  author: Jeff Silberman
-  description: Portworx installer.  Docs at https://docs.portworx.com
-  company: Portworx
-  license: Apache
-  min_ansible_version: 2.2
-  categories:
-    - system
-dependencies: []
