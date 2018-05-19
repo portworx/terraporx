@@ -49,7 +49,6 @@ resource "ibm_compute_vm_instance" "k8s_master" {
          "echo \"export KUBECONFIG=$HOME/admin.conf\" >> $HOME/.bashrc",
          "curl -O https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && KUBECONFIG=/etc/kubernetes/admin.conf kubectl apply -f kube-flannel.yml",
          "curl -O https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml && KUBECONFIG=/etc/kubernetes/admin.conf kubectl apply -f kube-flannel-rbac.yml",
-         "KUBECONFIG=/etc/kubernetes/admin.conf kubectl apply -n kube-system -f \"https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')\""
        ]
   }
 }
