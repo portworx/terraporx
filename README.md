@@ -12,9 +12,7 @@ The initial repository include examples for deploying Portworx across the follow
 * [Digital Ocean](https://github.com/portworx/terraporx/tree/master/digital_ocean)
 * [Hashi-Porx](https://github.com/portworx/terraporx/tree/master/hashi-porx) Full Hashicorp stack aligned for Portworx, including Consul/Nomad/Vault
 * [Packet.net](https://github.com/portworx/terraporx/tree/master/packet)
-* [automation](https://github.com/portworx/terraporx/tree/master/automation) Automation frameworks, including:
-   + [ansible](https://github.com/portworx/terraporx/blob/master/automation/ansible/README.md) Ansible All-in-one (etcd3/Portworx/Lighthouse)
-   + [vagrant](https://github.com/portworx/terraporx/blob/master/automation/vagrant/README.md) Deploy PX-ready VM's with Vagrant
+* [vagrant](https://github.com/portworx/terraporx/blob/master/automation/vagrant/README.md) Deploy PX-ready VM's with Vagrant
 
 The goal for the *Terraporx Repo* is to provide a community resource for sharing various Terraform configurations
 that make it easier to deploy and manage Portworx.    If you see potential enhancements to the existing content, 
